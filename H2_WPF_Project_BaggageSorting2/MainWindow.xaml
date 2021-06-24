@@ -1,0 +1,129 @@
+﻿<Window x:Class="H2_WPF_Project_BaggageSorting2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:H2_WPF_Project_BaggageSorting2"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="650" Width="1180">
+
+
+    <Grid>
+        <!-- Columns -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <!-- Rows -->
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- Start Button -->
+        <Button x:Name="StartButton" Background="Gray" Content="Open Airport" FontSize="20" Grid.Column="13" Grid.Row="11" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Black" Click="StartButton_Click"></Button>
+
+        <!-- Reception Buttons -->
+        <Button x:Name="Counter1Button" Background="Gray" Content="Counter1" FontSize="26" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Black"></Button>
+        <Button x:Name="Counter2Button" Background="Gray" Content="Counter2" FontSize="26" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Black"></Button>
+        <Button x:Name="Counter3Button" Background="Gray" Content="Counter3" FontSize="26" Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Black"></Button>
+        <Button x:Name="Counter4Button" Background="Gray" Content="Counter4" FontSize="26" Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Black"></Button>
+        <!-- Reception Open or Closed Indicator Labels -->
+        <Label x:Name="Counter1OpenOrClosed" Background="Green" Grid.Column="3" Grid.Row="1" BorderThickness="2" BorderBrush="Black"></Label>
+        <Label x:Name="Counter2OpenOrClosed" Background="Green" Grid.Column="3" Grid.Row="4" BorderThickness="2" BorderBrush="Black"></Label>
+        <Label x:Name="Counter3OpenOrClosed" Background="Green" Grid.Column="3" Grid.Row="7" BorderThickness="2" BorderBrush="Black"></Label>
+        <Label x:Name="Counter4OpenOrClosed" Background="Green" Grid.Column="3" Grid.Row="10" BorderThickness="2" BorderBrush="Black"></Label>
+        <!-- Reception Labels -->
+        <Label x:Name="Counter1" Background="LightGray" FontSize="22" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
+        <Label x:Name="Counter2" Background="LightGray" FontSize="22" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
+        <Label x:Name="Counter3" Background="LightGray" FontSize="22" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
+        <Label x:Name="Counter4" Background="LightGray"  FontSize="22" Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
+        
+        <!-- Conveyor Buttons -->
+        <Button x:Name="ConveyorBeltButton" Background="Gray" Content="Conveyor" FontSize="26" Grid.Column="7" Grid.Row="1" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Black"></Button>
+        <!-- Converyor Belt / Buffer ListBox-->
+        <ListBox x:Name="ConveyorBeltListBox" Background="LightGray" FontSize="15" Grid.Row="2" Grid.Column="7" Grid.RowSpan="12" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Height" Value="30"/>
+                    <Setter Property="VerticalContentAlignment" Value="Top"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+
+        <!-- Splitter Buttons -->
+        <Button x:Name="Splitter1Button" Background="Gray" Content="Splitter1" FontSize="26" Grid.Column="13" Grid.Row="1" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Black"></Button>
+        <Button x:Name="Splitter2Button" Background="Gray" Content="Splitter2" FontSize="26" Grid.Column="13" Grid.Row="4" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Black"></Button>
+        <!-- Splitter Labels -->
+        <Label x:Name="Splitter1" Background="LightGray" FontSize="22" Grid.Column="13" Grid.Row="2" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
+        <Label x:Name="Splitter2" Background="LightGray" FontSize="22" Grid.Column="13" Grid.Row="5" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
+
+        <!-- Gate Open or Closed Indicator Labels -->
+        <Label x:Name="Gate1OpenOrClosed" Background="Red" Grid.Column="20" Grid.Row="1" BorderThickness="2" BorderBrush="Black"></Label>
+        <Label x:Name="Gate2OpenOrClosed" Background="Red" Grid.Column="20" Grid.Row="4" BorderThickness="2" BorderBrush="Black"></Label>
+        <Label x:Name="Gate3OpenOrClosed" Background="Red" Grid.Column="20" Grid.Row="7" BorderThickness="2" BorderBrush="Black"></Label>
+        <!-- Gate Buttons -->
+        <Button x:Name="Gate1Button" Background="Gray" Content="Gate1" FontSize="26" Grid.Column="21" Grid.Row="1" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Black"></Button>
+        <Button x:Name="Gate2Button" Background="Gray" Content="Gate2" FontSize="26" Grid.Column="21" Grid.Row="4" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Black"></Button>
+        <Button x:Name="Gate3Button" Background="Gray" Content="Gate3" FontSize="26" Grid.Column="21" Grid.Row="7" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Black"></Button>
+        <!-- Gate Labels -->
+        <Label x:Name="Gate1" Background="LightGray" FontSize="22" Grid.Column="21" Grid.Row="2" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
+        <Label x:Name="Gate2" Background="LightGray" FontSize="22" Grid.Column="21" Grid.Row="5" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
+        <Label x:Name="Gate3" Background="LightGray" FontSize="22" Grid.Column="21" Grid.Row="8" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
+
+        <!-- Path from counter to conveyor-->
+        <Path Stroke="Black" Data="M 0 22 L 170 22" Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="4"/>
+        <Path Stroke="Black" Data="M 0 145 L 104 145 L 104 22"  Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="4" Grid.RowSpan="4"/>
+        <Path Stroke="Black" Data="M 0 145 L 104 145 L 104 21"  Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="4" Grid.RowSpan="4"/>
+        <Path Stroke="Black" Data="M 0 145 L 104 145 L 104 21"  Grid.Column="3" Grid.Row="8" Grid.ColumnSpan="4" Grid.RowSpan="4"/>
+        <!-- Path from conveyor to splitter-->
+        <Path Stroke="Black" Data="M 0 22 L 122 22" Grid.Column="10" Grid.Row="2" Grid.ColumnSpan="4"/>
+        <Path Stroke="Black" Data="M 122 145 L 65 145 L 65 22"  Grid.Column="10" Grid.Row="2" Grid.ColumnSpan="4" Grid.RowSpan="4"/>
+        <!-- Path from splitter to gate-->
+        <Path Stroke="Black" Data="M 0 22 L 210 22" Grid.Column="16" Grid.Row="2" Grid.ColumnSpan="5"/>
+        <Path Stroke="Black" Data="M 0 22 L 210 22" Grid.Column="16" Grid.Row="5" Grid.ColumnSpan="5"/>
+        <Path Stroke="Black" Data="M 122 265 L 22 265 L 22 22"  Grid.Column="18" Grid.Row="2" Grid.ColumnSpan="4" Grid.RowSpan="7"/>
+    
+    
+    </Grid>
+</Window>
