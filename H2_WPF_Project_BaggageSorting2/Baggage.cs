@@ -98,15 +98,11 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
 
-        public Baggage(int baggageId, int passengerId, int flightNumber/*, DateTime leftReception, DateTime arrivedAtSplitter, DateTime leftSplitter, DateTime arrivedAtGate*/)
+        public Baggage(int baggageId, int passengerId, int flightNumber)
         {
             BaggageId = baggageId;
             PassengerId = passengerId;
             FlightNumber = flightNumber;
-            /*LeftReception = leftReception;
-            ArrivedAtSplitter = arrivedAtSplitter;
-            LeftSplitter = leftSplitter;
-            ArrivedAtGate = arrivedAtGate;*/
         }
     }
 }
