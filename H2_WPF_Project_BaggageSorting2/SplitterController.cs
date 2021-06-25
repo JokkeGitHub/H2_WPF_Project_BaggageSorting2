@@ -10,50 +10,23 @@ namespace H2_WPF_Project_BaggageSorting2
     class SplitterController
     {
         ConveyorBeltController conveyorBeltController = new ConveyorBeltController();
-
-        static SplitterController splitterController = new SplitterController();
-        static Thread splitterAThread = new Thread(new ThreadStart(splitterController.SplitterA));
-        static Thread splitterBThread = new Thread(new ThreadStart(splitterController.SplitterB));
-
         static object _lockGetBaggage = new object();
 
-        public static void StartThreads()
+        public SplitterController()
         {
-            splitterAThread.Start();
-            splitterBThread.Start();
-        }
-
-        void SplitterA()
-        {
-            while (true)
+            for (int i = 1; i <= 2; i++)
             {
-                Baggage baggage = new Baggage(0, 0, 0/*, default, default, default, default*/);
-
-                Monitor.Enter(_lockGetBaggage);
-
-                try
-                {
-                    baggage = conveyorBeltController.GetBaggage(baggage);
-                    Monitor.Pulse(_lockGetBaggage);
-                }
-                finally
-                {
-                    Monitor.Exit(_lockGetBaggage);
-                }
-
-                if (baggage != null)
-                {
-                    baggage.ArrivedAtSplitter = DateTime.Now;
-                    Debug.WriteLine($"Splitter A, bag {baggage.BaggageId} arrived");
-                }
+                int splitterNumber = i;
+                Thread splitterThread = new Thread(() => SplitterSorting(splitterNumber));
+                splitterThread.Start();
             }
         }
 
-        void SplitterB()
+        void SplitterSorting(int splitterNumber)
         {
             while (true)
             {
-                Baggage baggage = new Baggage(0, 0, 0/*, default, default, default, default*/);
+                Baggage baggage = new Baggage(0, 0, 0);
 
                 Monitor.Enter(_lockGetBaggage);
 
@@ -70,7 +43,7 @@ namespace H2_WPF_Project_BaggageSorting2
                 if (baggage != null)
                 {
                     baggage.ArrivedAtSplitter = DateTime.Now;
-                    Debug.WriteLine($"Splitter B, bag {baggage.BaggageId} arrived");
+                    Debug.WriteLine($"Bag {baggage.BaggageId} arrived at splitter{splitterNumber}, at {baggage.ArrivedAtSplitter}");
                 }
             }
         }

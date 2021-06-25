@@ -53,6 +53,7 @@ namespace H2_WPF_Project_BaggageSorting2
             StartButton.Visibility = Visibility.Hidden;
 
             ReceptionController receptionController = new ReceptionController();
+            SplitterController splitterController = new SplitterController();
 
             receptionController.BaggageCreated1 += OnBaggageCreated1;
             receptionController.BaggageCreated2 += OnBaggageCreated2;
@@ -64,7 +65,6 @@ namespace H2_WPF_Project_BaggageSorting2
             receptionController.OpenOrClosedCounter3 += OnOpenOrClosedCounter3;
             receptionController.OpenOrClosedCounter4 += OnOpenOrClosedCounter4;
 
-            SplitterController.StartThreads();
         }
 
         #region OnBaggageCreated Events
