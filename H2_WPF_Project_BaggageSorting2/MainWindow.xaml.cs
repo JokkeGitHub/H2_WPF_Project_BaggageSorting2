@@ -54,6 +54,7 @@ namespace H2_WPF_Project_BaggageSorting2
 
             ReceptionController receptionController = new ReceptionController();
             SplitterController splitterController = new SplitterController();
+            GateController gateController = new GateController();
 
             receptionController.BaggageCreated1 += OnBaggageCreated1;
             receptionController.BaggageCreated2 += OnBaggageCreated2;
@@ -67,6 +68,10 @@ namespace H2_WPF_Project_BaggageSorting2
 
             splitterController.BaggageArrivedInSplitter1 += OnBaggageArrivedInSplitter1;
             splitterController.BaggageArrivedInSplitter2 += OnBaggageArrivedInSplitter2;
+
+            gateController.OpenOrClosedGate1 += OnOpenOrClosedGate1;
+            gateController.OpenOrClosedGate2 += OnOpenOrClosedGate2;
+            gateController.OpenOrClosedGate3 += OnOpenOrClosedGate3;
         }
 
         #region OnBaggageCreated Events
@@ -253,6 +258,80 @@ namespace H2_WPF_Project_BaggageSorting2
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
                 {
                     Splitter2.Content = ((BaggageEvent)e).Baggage.BaggageId;
+                }));
+            }
+        }
+        #endregion
+
+        #region OnOpenOrClosedGate Events
+        private void OnOpenOrClosedGate1(object sender, EventArgs e)
+        {
+            if (e is GateEvent)
+            {
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                {
+                    switch (((GateEvent)e).Gate.Open)
+                    {
+                        case bool when ((GateEvent)e).Gate.Open == true:
+                            Gate1OpenOrClosed.Background = new SolidColorBrush(Colors.Green);
+                            break;
+
+                        case bool when ((GateEvent)e).Gate.Open == false:
+                            Gate1OpenOrClosed.Background = new SolidColorBrush(Colors.Red);
+                            Gate1.Content = "";
+                            break;
+
+                        default:
+                            break;
+                    }
+                }));
+            }
+        }
+
+        private void OnOpenOrClosedGate2(object sender, EventArgs e)
+        {
+            if (e is GateEvent)
+            {
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                {
+                    switch (((GateEvent)e).Gate.Open)
+                    {
+                        case bool when ((GateEvent)e).Gate.Open == true:
+                            Gate2OpenOrClosed.Background = new SolidColorBrush(Colors.Green);
+                            break;
+
+                        case bool when ((GateEvent)e).Gate.Open == false:
+                            Gate2OpenOrClosed.Background = new SolidColorBrush(Colors.Red);
+                            Gate2.Content = "";
+                            break;
+
+                        default:
+                            break;
+                    }
+                }));
+            }
+        }
+
+        private void OnOpenOrClosedGate3(object sender, EventArgs e)
+        {
+            if (e is GateEvent)
+            {
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                {
+                    switch (((GateEvent)e).Gate.Open)
+                    {
+                        case bool when ((GateEvent)e).Gate.Open == true:
+                            Gate3OpenOrClosed.Background = new SolidColorBrush(Colors.Green);
+                            break;
+
+                        case bool when ((GateEvent)e).Gate.Open == false:
+                            Gate3OpenOrClosed.Background = new SolidColorBrush(Colors.Red);
+                            Gate3.Content = "";
+                            break;
+
+                        default:
+                            break;
+                    }
                 }));
             }
         }

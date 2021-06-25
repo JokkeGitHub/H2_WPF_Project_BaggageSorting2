@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -41,11 +42,11 @@ namespace H2_WPF_Project_BaggageSorting2
             {
                 if (gate.Open == true)
                 {
-                    Thread.Sleep(random.Next(700, 4000));
+                    Thread.Sleep(random.Next(200, 2000));
                     GetFlightPlanInfo(gate);
                 }
 
-                Thread.Sleep(random.Next(300, 2500));
+                Thread.Sleep(random.Next(700, 4000));
                 gate.Open = gate.OpenOrClosed(gate.Open, remainingFlightPlans);
                 OpenClosedDetermineListener(gate);
             }
@@ -53,7 +54,7 @@ namespace H2_WPF_Project_BaggageSorting2
 
         private void GetFlightPlanInfo(Gate gate)
         {
-
+            Debug.WriteLine($"{gate.GateName} is getting Flight Plan");
         }
         
         // New class for these?
@@ -61,15 +62,15 @@ namespace H2_WPF_Project_BaggageSorting2
         {
             switch (gate.GateName)
             {
-                case "Counter1":
+                case "Gate1":
                     OpenOrClosedGate1?.Invoke(this, new GateEvent(gate));
                     break;
 
-                case "Counter2":
+                case "Gate2":
                     OpenOrClosedGate2?.Invoke(this, new GateEvent(gate));
                     break;
 
-                case "Counter3":
+                case "Gate3":
                     OpenOrClosedGate3?.Invoke(this, new GateEvent(gate));
                     break;
 
