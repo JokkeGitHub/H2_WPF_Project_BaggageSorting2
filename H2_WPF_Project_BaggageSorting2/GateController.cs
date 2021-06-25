@@ -15,6 +15,7 @@ namespace H2_WPF_Project_BaggageSorting2
         static CentralServer centralServer = new CentralServer();
         static FlightPlan[] flightPlan = centralServer.GetFlightPlan();
         static int remainingFlightPlans = flightPlan.Length;
+        static object _lockFlightPlan = new object();
 
         public EventHandler OpenOrClosedGate1;
         public EventHandler OpenOrClosedGate2;
@@ -51,12 +52,54 @@ namespace H2_WPF_Project_BaggageSorting2
                 OpenClosedDetermineListener(gate);
             }
         }
-
         private void GetFlightPlanInfo(Gate gate)
         {
-            Debug.WriteLine($"{gate.GateName} is getting Flight Plan");
+            Monitor.Enter(_lockFlightPlan);
+            try
+            {
+                if (remainingFlightPlans == 0)
+                {
+                    Debug.WriteLine("No more flights");
+                }
+                else
+                {
+                    gate.FlightNumber = flightPlan[0].FlightNumber;
+                    Debug.WriteLine($"{gate.GateName} received Flight Number {gate.FlightNumber}");
+
+                    NextFlightPlan();
+
+                    Thread.Sleep(random.Next(100, 1000));
+                    Monitor.PulseAll(_lockFlightPlan);
+
+                    //CreateBaggage(reception, passengerId, flightNumber);
+                }
+            }
+            finally
+            {
+                Monitor.Exit(_lockFlightPlan);
+            }
+
+            FlightNumberDetermineListener(gate);
         }
-        
+
+        private void NextFlightPlan()
+        {
+            Monitor.Enter(_lockFlightPlan);
+            try
+            {
+                for (int i = 0; i < flightPlan.Length - 1; i++)
+                {
+                    flightPlan[i] = flightPlan[i + 1];
+                }
+
+                remainingFlightPlans -= 1;
+            }
+            finally
+            {
+                Monitor.Exit(_lockFlightPlan);
+            }
+        }
+
         // New class for these?
         private void OpenClosedDetermineListener(Gate gate)
         {
@@ -72,6 +115,27 @@ namespace H2_WPF_Project_BaggageSorting2
 
                 case "Gate3":
                     OpenOrClosedGate3?.Invoke(this, new GateEvent(gate));
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void FlightNumberDetermineListener(Gate gate)
+        {
+            switch (gate.GateName)
+            {
+                case "Gate1":
+                    FlightPlanGate1?.Invoke(this, new GateEvent(gate));
+                    break;
+
+                case "Gate2":
+                    FlightPlanGate2?.Invoke(this, new GateEvent(gate));
+                    break;
+
+                case "Gate3":
+                    FlightPlanGate3?.Invoke(this, new GateEvent(gate));
                     break;
 
                 default:

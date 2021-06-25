@@ -72,6 +72,10 @@ namespace H2_WPF_Project_BaggageSorting2
             gateController.OpenOrClosedGate1 += OnOpenOrClosedGate1;
             gateController.OpenOrClosedGate2 += OnOpenOrClosedGate2;
             gateController.OpenOrClosedGate3 += OnOpenOrClosedGate3;
+
+            gateController.FlightPlanGate1 += OnFlightPlanGate1;
+            gateController.FlightPlanGate2 += OnFlightPlanGate2;
+            gateController.FlightPlanGate3 += OnFlightPlanGate3;
         }
 
         #region OnBaggageCreated Events
@@ -274,11 +278,14 @@ namespace H2_WPF_Project_BaggageSorting2
                     {
                         case bool when ((GateEvent)e).Gate.Open == true:
                             Gate1OpenOrClosed.Background = new SolidColorBrush(Colors.Green);
+                            DestinationGate1.Background = new SolidColorBrush(Colors.Green);
                             break;
 
                         case bool when ((GateEvent)e).Gate.Open == false:
                             Gate1OpenOrClosed.Background = new SolidColorBrush(Colors.Red);
+                            DestinationGate1.Background = new SolidColorBrush(Colors.Red);
                             Gate1.Content = "";
+                            DestinationGate1.Content = "";
                             break;
 
                         default:
@@ -298,11 +305,14 @@ namespace H2_WPF_Project_BaggageSorting2
                     {
                         case bool when ((GateEvent)e).Gate.Open == true:
                             Gate2OpenOrClosed.Background = new SolidColorBrush(Colors.Green);
+                            DestinationGate2.Background = new SolidColorBrush(Colors.Green);
                             break;
 
                         case bool when ((GateEvent)e).Gate.Open == false:
                             Gate2OpenOrClosed.Background = new SolidColorBrush(Colors.Red);
+                            DestinationGate2.Background = new SolidColorBrush(Colors.Red);
                             Gate2.Content = "";
+                            DestinationGate2.Content = "";
                             break;
 
                         default:
@@ -322,16 +332,52 @@ namespace H2_WPF_Project_BaggageSorting2
                     {
                         case bool when ((GateEvent)e).Gate.Open == true:
                             Gate3OpenOrClosed.Background = new SolidColorBrush(Colors.Green);
+                            DestinationGate3.Background = new SolidColorBrush(Colors.Green);
                             break;
 
                         case bool when ((GateEvent)e).Gate.Open == false:
                             Gate3OpenOrClosed.Background = new SolidColorBrush(Colors.Red);
+                            DestinationGate3.Background = new SolidColorBrush(Colors.Red);
                             Gate3.Content = "";
+                            DestinationGate3.Content = "";
                             break;
 
                         default:
                             break;
                     }
+                }));
+            }
+        }
+        #endregion
+
+        #region OnFlightPlanGate Events
+        private void OnFlightPlanGate1(object sender, EventArgs e)
+        {
+            if (e is GateEvent)
+            {
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                {
+                    DestinationGate1.Content = ((GateEvent)e).Gate.FlightNumber;
+                }));
+            }
+        }
+        private void OnFlightPlanGate2(object sender, EventArgs e)
+        {
+            if (e is GateEvent)
+            {
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                {
+                    DestinationGate2.Content = ((GateEvent)e).Gate.FlightNumber;
+                }));
+            }
+        }
+        private void OnFlightPlanGate3(object sender, EventArgs e)
+        {
+            if (e is GateEvent)
+            {
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                {
+                    DestinationGate3.Content = ((GateEvent)e).Gate.FlightNumber;
                 }));
             }
         }
