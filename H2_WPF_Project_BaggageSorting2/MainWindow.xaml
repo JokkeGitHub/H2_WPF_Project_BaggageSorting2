@@ -117,6 +117,15 @@
         <Label x:Name="Gate1" Background="LightGray" FontSize="22" Grid.Column="21" Grid.Row="2" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
         <Label x:Name="Gate2" Background="LightGray" FontSize="22" Grid.Column="21" Grid.Row="5" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
         <Label x:Name="Gate3" Background="LightGray" FontSize="22" Grid.Column="21" Grid.Row="8" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
+        
+        <!-- Gate Destination Buttons -->
+        <Button x:Name="DestinationGate1Button" Background="Gray" Content="Destination" FontSize="26" Grid.Column="24" Grid.Row="1" Grid.ColumnSpan="4" BorderThickness="1" BorderBrush="Black"></Button>
+        <Button x:Name="DestinationGate2Button" Background="Gray" Content="Destination" FontSize="26" Grid.Column="24" Grid.Row="4" Grid.ColumnSpan="4" BorderThickness="1" BorderBrush="Black"></Button>
+        <Button x:Name="DestinationGate3Button" Background="Gray" Content="Destination" FontSize="26" Grid.Column="24" Grid.Row="7" Grid.ColumnSpan="4" BorderThickness="1" BorderBrush="Black"></Button>
+        <!-- Gate Destination Labels -->
+        <Label x:Name="DestinationGate1" Background="Red" Content="NO PLANE" FontSize="22" Grid.Column="24" Grid.Row="2" Grid.ColumnSpan="4" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
+        <Label x:Name="DestinationGate2" Background="Red" Content="NO PLANE"  FontSize="22" Grid.Column="24" Grid.Row="5" Grid.ColumnSpan="4" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
+        <Label x:Name="DestinationGate3" Background="Red" Content="NO PLANE"  FontSize="22" Grid.Column="24" Grid.Row="8" Grid.ColumnSpan="4" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
 
         <!-- Path from counter to conveyor-->
         <Path Stroke="Black" Data="M 0 22 L 170 22" Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="4"/>

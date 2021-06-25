@@ -69,6 +69,8 @@ namespace H2_WPF_Project_BaggageSorting2
             for (int i = 0; i < conveyorBelt.Length - 1; i++)
             {
                 conveyorBelt[i] = conveyorBelt[i + 1];
+
+                // BAGGAGE EVENT HERE ?????? ? :D
             }
             bufferCounter -= 1;
         }
