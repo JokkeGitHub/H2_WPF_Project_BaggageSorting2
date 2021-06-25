@@ -82,14 +82,7 @@
         <!-- Conveyor Buttons -->
         <Button x:Name="ConveyorBeltButton" Background="Gray" Content="Conveyor" FontSize="26" Grid.Column="7" Grid.Row="1" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Black"></Button>
         <!-- Converyor Belt / Buffer ListBox-->
-        <ListBox x:Name="ConveyorBeltListBox" Background="LightGray" FontSize="15" Grid.Row="2" Grid.Column="7" Grid.RowSpan="12" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="Height" Value="30"/>
-                    <Setter Property="VerticalContentAlignment" Value="Top"/>
-                </Style>
-            </ListBox.ItemContainerStyle>
-        </ListBox>
+        <ListBox x:Name="ConveyorBeltListBox" Background="LightGray" FontSize="15" Grid.Row="2" Grid.Column="7" Grid.RowSpan="12" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black"></ListBox>
 
         <!-- Splitter Buttons -->
         <Button x:Name="Splitter1Button" Background="Gray" Content="Splitter1" FontSize="26" Grid.Column="13" Grid.Row="1" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Black"></Button>

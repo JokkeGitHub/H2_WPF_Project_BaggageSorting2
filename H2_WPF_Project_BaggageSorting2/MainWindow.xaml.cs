@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,20 +29,22 @@ namespace H2_WPF_Project_BaggageSorting2
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            TempClass tempClass = new TempClass();
+            StartButton.Visibility = Visibility.Hidden;
 
-            tempClass.BaggageCreated1 += OnBaggageCreated1;
-            tempClass.BaggageCreated2 += OnBaggageCreated2;
-            tempClass.BaggageCreated3 += OnBaggageCreated3;
-            tempClass.BaggageCreated4 += OnBaggageCreated4;
+            ReceptionController receptionController = new ReceptionController();
 
-            tempClass.OpenOrClosedCounter1 += OnOpenOrClosedCounter1;
-            tempClass.OpenOrClosedCounter2 += OnOpenOrClosedCounter2;
-            tempClass.OpenOrClosedCounter3 += OnOpenOrClosedCounter3;
-            tempClass.OpenOrClosedCounter4 += OnOpenOrClosedCounter4;
+            receptionController.BaggageCreated1 += OnBaggageCreated1;
+            receptionController.BaggageCreated2 += OnBaggageCreated2;
+            receptionController.BaggageCreated3 += OnBaggageCreated3;
+            receptionController.BaggageCreated4 += OnBaggageCreated4;
+
+            receptionController.OpenOrClosedCounter1 += OnOpenOrClosedCounter1;
+            receptionController.OpenOrClosedCounter2 += OnOpenOrClosedCounter2;
+            receptionController.OpenOrClosedCounter3 += OnOpenOrClosedCounter3;
+            receptionController.OpenOrClosedCounter4 += OnOpenOrClosedCounter4;
         }
 
-        #region OnBaggageCreated Listeners
+        #region OnBaggageCreated Events
         private void OnBaggageCreated1(object sender, EventArgs e)
         {
             if (e is BaggageEvent)
@@ -87,7 +90,7 @@ namespace H2_WPF_Project_BaggageSorting2
         }
         #endregion
 
-        #region Open/ClosedCounter Listeners
+        #region Open/ClosedCounter Events
         private void OnOpenOrClosedCounter1(object sender, EventArgs e)
         {
             if (e is ReceptionEvent)
@@ -184,5 +187,13 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
         #endregion
+
+        //Maybe Baggage event instead
+
+        // Maybe list of labels?
+        // Or for loop
+        //Get conveyor method then
+        // if conveyor[i] == null then label[i] = "";
+        // else label[i] = conveyor[i]
     }
 }

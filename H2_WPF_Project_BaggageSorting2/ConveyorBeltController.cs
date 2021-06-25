@@ -7,25 +7,32 @@ using System.Diagnostics;
 
 namespace H2_WPF_Project_BaggageSorting2
 {
-    public class ConveyorBelt
+    public class ConveyorBeltController
     {
         public static int bufferCounter = -1;
-        static Baggage[] conveyorBelt = new Baggage[12];
-        public EventHandler ConveyorBeltUpdate;
+        public static Baggage[] conveyorBelt = new Baggage[50];
 
-        void AddBagToConveyorBelt(Baggage baggage, string counterName)
+        static object _lockConveyorBelt = new object();
+
+        public Baggage[] GetConveyorBelt()
         {
-            //Monitor.Enter(_lockConveyorBelt);
+            return (Baggage[])conveyorBelt.Clone();
+        }
+
+        public void AddBagToConveyorBelt(Baggage baggage, string counterName)
+        {
+            Monitor.Enter(_lockConveyorBelt);
             try
             {
                 bufferCounter += 1;
                 conveyorBelt[bufferCounter] = baggage;
-                Debug.WriteLine($"{counterName} bag {baggage.BaggageId}, arrived at conveyor belt.");
-                //Monitor.PulseAll(_lockConveyorBelt);
+                Debug.WriteLine($"Bag {conveyorBelt[bufferCounter].BaggageId}, arrived at conveyor belt, from {counterName}");
+
+                Monitor.PulseAll(_lockConveyorBelt);
             }
             finally
             {
-                //Monitor.Exit(_lockConveyorBelt);
+                Monitor.Exit(_lockConveyorBelt);
             }
         }
 
@@ -43,9 +50,9 @@ namespace H2_WPF_Project_BaggageSorting2
                 try
                 {
                     baggage = conveyorBelt[0];
-                    
 
-                   // Monitor.PulseAll(_lockConveyorBelt);
+
+                    // Monitor.PulseAll(_lockConveyorBelt);
                 }
                 finally
                 {

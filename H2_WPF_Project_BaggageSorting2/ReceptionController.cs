@@ -9,16 +9,18 @@ namespace H2_WPF_Project_BaggageSorting2
 {
     class ReceptionController
     {
-        // This class is responsible for reception threads
-        public Random random = new Random();
-
-        static object _lockConveyorBelt = new object();
+        // This class is responsible for handling the check-in process
 
         static CentralServer centralServer = new CentralServer();
         static Reservation[] reservations = centralServer.GetReservations();
         static int remainingReservations = reservations.Length;
         static object _lockReservation = new object();
+        static object _lockConveyorBelt = new object();
 
+        public Random random = new Random();
+
+        // Create listeners
+        #region EventHandler Listeners
         public EventHandler BaggageCreated1;
         public EventHandler BaggageCreated2;
         public EventHandler BaggageCreated3;
@@ -28,6 +30,7 @@ namespace H2_WPF_Project_BaggageSorting2
         public EventHandler OpenOrClosedCounter2;
         public EventHandler OpenOrClosedCounter3;
         public EventHandler OpenOrClosedCounter4;
+        #endregion
 
         public ReceptionController()
         {
@@ -93,6 +96,29 @@ namespace H2_WPF_Project_BaggageSorting2
             BaggageCreatedDetermineListener(reception, baggage);
 
             Debug.WriteLine($"{reception.CounterName} created bag {baggage.BaggageId}, passenger {baggage.PassengerId}, flight {baggage.FlightNumber}");
+
+            BaggageLeavingReception(baggage, reception);
+        }
+
+        private void BaggageLeavingReception(Baggage baggage, Reception reception)
+        {
+            ConveyorBeltController conveyorBeltController = new ConveyorBeltController();
+
+            Monitor.Enter(_lockConveyorBelt);
+
+            try
+            {
+                baggage.LeftReception = DateTime.Now;
+
+                Debug.WriteLine($"Bag {baggage.BaggageId} left {reception.CounterName} at {baggage.LeftReception}");
+                conveyorBeltController.AddBagToConveyorBelt(baggage, reception.CounterName);
+
+                Monitor.PulseAll(_lockConveyorBelt);
+            }
+            finally
+            {
+                Monitor.Exit(_lockConveyorBelt);
+            }
         }
 
 
