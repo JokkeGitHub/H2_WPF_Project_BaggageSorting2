@@ -53,45 +53,36 @@ namespace H2_WPF_Project_BaggageSorting2
             Open = open;
             FlightNumber = flightNumber;
         }
-        public bool OpenOrClosed(bool open) // flightNumber?
-        {
-            // if flightNo != 0
-            // open = true
-            // else 
-            // open false
 
+        public bool OpenOrClosed(bool open, int remainingFlightPlans)
+        {
             // Maybe control it with time? 
 
             Random random = new Random();
 
-            int tempInt = random.Next(0, 2);
-            switch (tempInt)
-            {
-                case 0:
-                    open = true;
-                    break;
-
-                case 1:
-                    open = false;
-                    break;
-
-                default:
-                    break;
-            }
-
-            Debug.WriteLine($"{GateName} Open = {open}");
-
-            return open;
-
-            /*
-            if (remainingReservations == 0)
+            if (remainingFlightPlans == 0)
             {
                 open = false;
             }
             else
             {
-                
-            }*/
+                switch (random.Next(0, 2))
+                {
+                    case 0:
+                        open = true;
+                        break;
+
+                    case 1:
+                        open = false;
+                        break;
+
+                    default:
+                        break;
+                }
+
+                Debug.WriteLine($"{GateName} Open = {open}");
+            }
+            return open;
         }
     }
 }

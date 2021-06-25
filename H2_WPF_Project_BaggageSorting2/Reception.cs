@@ -54,8 +54,7 @@ namespace H2_WPF_Project_BaggageSorting2
             }
             else
             {
-                int tempInt = random.Next(0, 2);
-                switch (tempInt)
+                switch (random.Next(0, 2))
                 {
                     case 0:
                         open = true;

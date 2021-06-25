@@ -8,16 +8,16 @@ namespace H2_WPF_Project_BaggageSorting2
 
         static FlightPlan[] flightPlanList = new FlightPlan[]
         {
-            new FlightPlan(101, "Stockholm", DateTime.Parse("16/6/2021 10:22:00")),
-            new FlightPlan(102, "Berlin", DateTime.Parse("16/6/2021 11:22:00")),
-            new FlightPlan(103, "Paris", DateTime.Parse("16/6/2021 12:22:00")),
-            new FlightPlan(104, "London", DateTime.Parse("16/6/2021 13:22:00")),
-            new FlightPlan(105, "Hong Kong", DateTime.Parse("16/6/2021 13:22:00")),
-            new FlightPlan(106, "Washington D.C.", DateTime.Parse("16/6/2021 13:22:00")),
-            new FlightPlan(107, "Rome", DateTime.Parse("16/6/2021 13:22:00")),
-            new FlightPlan(108, "Vienna", DateTime.Parse("16/6/2021 13:22:00")),
-            new FlightPlan(109, "Tokyo", DateTime.Parse("16/6/2021 13:22:00")),
-            new FlightPlan(110, "Oslo", DateTime.Parse("16/6/2021 09:22:00"))
+            new FlightPlan(101, "Stockholm", DateTime.Now.AddMinutes(1)),
+            new FlightPlan(102, "Berlin", DateTime.Now.AddMinutes(1)),
+            new FlightPlan(103, "Paris", DateTime.Now.AddMinutes(1)),
+            new FlightPlan(104, "London", DateTime.Now.AddMinutes(2)),
+            new FlightPlan(105, "Hong Kong", DateTime.Now.AddMinutes(2)),
+            new FlightPlan(106, "Washington D.C.", DateTime.Now.AddMinutes(3)),
+            new FlightPlan(107, "Rome", DateTime.Now.AddMinutes(3)),
+            new FlightPlan(108, "Vienna", DateTime.Now.AddMinutes(3)),
+            new FlightPlan(109, "Tokyo", DateTime.Now.AddMinutes(4)),
+            new FlightPlan(110, "Oslo", DateTime.Now.AddMinutes(4))
         };
 
         static Reservation[] reservationList = new Reservation[]

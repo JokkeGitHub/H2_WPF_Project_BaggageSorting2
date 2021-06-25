@@ -25,7 +25,7 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
 
-        void SplitterSorting(int splitterNumber)
+        private void SplitterSorting(int splitterNumber)
         {
             Random random = new Random();
             while (true)
@@ -55,7 +55,7 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
 
-        void BaggageArrivedInSplitterDetermineListener(int splitterNumber, Baggage baggage)
+        private void BaggageArrivedInSplitterDetermineListener(int splitterNumber, Baggage baggage)
         {
             switch (splitterNumber)
             {

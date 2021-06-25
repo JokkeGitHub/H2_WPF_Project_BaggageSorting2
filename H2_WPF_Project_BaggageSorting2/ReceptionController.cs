@@ -56,7 +56,6 @@ namespace H2_WPF_Project_BaggageSorting2
 
                 Thread.Sleep(random.Next(100, 1000));
                 reception.Open = reception.OpenOrClosed(reception.Open, remainingReservations);
-                OpenOrClosedCounter1?.Invoke(this, new ReceptionEvent(reception));
                 OpenClosedDetermineListener(reception);
             }
         }
@@ -123,8 +122,6 @@ namespace H2_WPF_Project_BaggageSorting2
 
 
         // add bag event
-        // add timestamp
-        // Add bag to conveyor belt
 
 
         private void NextReservation()
