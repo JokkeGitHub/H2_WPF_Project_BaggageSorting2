@@ -12,6 +12,9 @@ namespace H2_WPF_Project_BaggageSorting2
         ConveyorBeltController conveyorBeltController = new ConveyorBeltController();
         static object _lockGetBaggage = new object();
 
+        public EventHandler BaggageArrivedInSplitter1;
+        public EventHandler BaggageArrivedInSplitter2;
+
         public SplitterController()
         {
             for (int i = 1; i <= 2; i++)
@@ -27,7 +30,7 @@ namespace H2_WPF_Project_BaggageSorting2
             Random random = new Random();
             while (true)
             {
-                Thread.Sleep(random.Next(100, 1000));
+                Thread.Sleep(random.Next(500, 3000));
 
                 Baggage baggage = new Baggage(0, 0, 0);
 
@@ -46,7 +49,26 @@ namespace H2_WPF_Project_BaggageSorting2
                 {
                     baggage.ArrivedAtSplitter = DateTime.Now;
                     Debug.WriteLine($"Bag {baggage.BaggageId} arrived at splitter{splitterNumber}, at {baggage.ArrivedAtSplitter}");
+
+                    BaggageArrivedInSplitterDetermineListener(splitterNumber, baggage);
                 }
+            }
+        }
+
+        void BaggageArrivedInSplitterDetermineListener(int splitterNumber, Baggage baggage)
+        {
+            switch (splitterNumber)
+            {
+                case 1:
+                    BaggageArrivedInSplitter1?.Invoke(this, new BaggageEvent(baggage));
+                    break;
+
+                case 2:
+                    BaggageArrivedInSplitter2?.Invoke(this, new BaggageEvent(baggage));
+                    break;
+
+                default:
+                    break;
             }
         }
     }

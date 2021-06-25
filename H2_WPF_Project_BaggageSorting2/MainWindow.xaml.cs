@@ -65,6 +65,8 @@ namespace H2_WPF_Project_BaggageSorting2
             receptionController.OpenOrClosedCounter3 += OnOpenOrClosedCounter3;
             receptionController.OpenOrClosedCounter4 += OnOpenOrClosedCounter4;
 
+            splitterController.BaggageArrivedInSplitter1 += OnBaggageArrivedInSplitter1;
+            splitterController.BaggageArrivedInSplitter2 += OnBaggageArrivedInSplitter2;
         }
 
         #region OnBaggageCreated Events
@@ -113,7 +115,7 @@ namespace H2_WPF_Project_BaggageSorting2
         }
         #endregion
 
-        #region Open/ClosedCounter Events
+        #region OnOpenOrClosedCounter Events
         private void OnOpenOrClosedCounter1(object sender, EventArgs e)
         {
             if (e is ReceptionEvent)
@@ -211,6 +213,7 @@ namespace H2_WPF_Project_BaggageSorting2
         }
         #endregion
 
+        #region CONVEYOR BELT EVENTS ??????? NOT WORKING FIX THIS MOFUGGAH
         //Maybe Baggage event instead
         /*
         public void ConveyorTest()
@@ -230,5 +233,29 @@ namespace H2_WPF_Project_BaggageSorting2
                 }
             }
         }*/
+        #endregion
+
+        #region OnBaggageArrivedInSplitter Events
+        private void OnBaggageArrivedInSplitter1(object sender, EventArgs e)
+        {
+            if (e is BaggageEvent)
+            {
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                {
+                    Splitter1.Content = ((BaggageEvent)e).Baggage.BaggageId;
+                }));
+            }
+        }
+        private void OnBaggageArrivedInSplitter2(object sender, EventArgs e)
+        {
+            if (e is BaggageEvent)
+            {
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                {
+                    Splitter2.Content = ((BaggageEvent)e).Baggage.BaggageId;
+                }));
+            }
+        }
+        #endregion
     }
 }
