@@ -24,12 +24,14 @@ namespace H2_WPF_Project_BaggageSorting2
 
         void SplitterSorting(int splitterNumber)
         {
+            Random random = new Random();
             while (true)
             {
+                Thread.Sleep(random.Next(100, 1000));
+
                 Baggage baggage = new Baggage(0, 0, 0);
 
                 Monitor.Enter(_lockGetBaggage);
-
                 try
                 {
                     baggage = conveyorBeltController.GetBaggage(baggage);
