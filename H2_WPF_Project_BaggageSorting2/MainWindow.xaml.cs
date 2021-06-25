@@ -22,10 +22,31 @@ namespace H2_WPF_Project_BaggageSorting2
     /// </summary>
     public partial class MainWindow : Window
     {
+        //Label[] label = new Label[12];
+
         public MainWindow()
         {
             InitializeComponent();
+
+            //InitializeLabelList();
         }
+
+        /*
+        void InitializeLabelList()
+        {
+            label[0] = ConveyorBeltLabel0;
+            label[1] = ConveyorBeltLabel1;
+            label[2] = ConveyorBeltLabel2;
+            label[3] = ConveyorBeltLabel3;
+            label[4] = ConveyorBeltLabel4;
+            label[5] = ConveyorBeltLabel5;
+            label[6] = ConveyorBeltLabel6;
+            label[7] = ConveyorBeltLabel7;
+            label[8] = ConveyorBeltLabel8;
+            label[9] = ConveyorBeltLabel9;
+            label[10] = ConveyorBeltLabel10;
+            label[11] = ConveyorBeltLabel11;
+        }*/
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
@@ -42,6 +63,8 @@ namespace H2_WPF_Project_BaggageSorting2
             receptionController.OpenOrClosedCounter2 += OnOpenOrClosedCounter2;
             receptionController.OpenOrClosedCounter3 += OnOpenOrClosedCounter3;
             receptionController.OpenOrClosedCounter4 += OnOpenOrClosedCounter4;
+
+            SplitterController.StartThreads();
         }
 
         #region OnBaggageCreated Events
@@ -189,11 +212,23 @@ namespace H2_WPF_Project_BaggageSorting2
         #endregion
 
         //Maybe Baggage event instead
+        /*
+        public void ConveyorTest()
+        {
+            ConveyorBeltController conveyorBeltController = new ConveyorBeltController();
+            Baggage[] conveyorBelt = conveyorBeltController.GetConveyorBelt();            
 
-        // Maybe list of labels?
-        // Or for loop
-        //Get conveyor method then
-        // if conveyor[i] == null then label[i] = "";
-        // else label[i] = conveyor[i]
+            for (int i = 0; i < conveyorBelt.Length -1; i++)
+            {
+                if (conveyorBelt[i] == null)
+                {
+                    label[i].Content = "";
+                }
+                else
+                {
+                    label[i].Content = conveyorBelt[i].BaggageId;
+                }
+            }
+        }*/
     }
 }

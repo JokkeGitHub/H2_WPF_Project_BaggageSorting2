@@ -28,6 +28,9 @@ namespace H2_WPF_Project_BaggageSorting2
                 conveyorBelt[bufferCounter] = baggage;
                 Debug.WriteLine($"Bag {conveyorBelt[bufferCounter].BaggageId}, arrived at conveyor belt, from {counterName}");
 
+                /*MainWindow mainWindow = new MainWindow();
+                mainWindow.ConveyorTest();*/
+
                 Monitor.PulseAll(_lockConveyorBelt);
             }
             finally
@@ -45,43 +48,29 @@ namespace H2_WPF_Project_BaggageSorting2
             }
             else
             {
-                //Monitor.Enter(_lockConveyorBelt);
-
+                Monitor.Enter(_lockConveyorBelt);
                 try
                 {
                     baggage = conveyorBelt[0];
+                    MoveBaggageOnConveyorBelt();
 
-
-                    // Monitor.PulseAll(_lockConveyorBelt);
+                    Monitor.PulseAll(_lockConveyorBelt);
                 }
                 finally
                 {
-                    //Monitor.Exit(_lockConveyorBelt);
+                    Monitor.Exit(_lockConveyorBelt);
                 }
-
-                MoveBaggageOnConveyorBelt();
-
                 return baggage;
             }
         }
 
         void MoveBaggageOnConveyorBelt()
         {
-            //Monitor.Enter(_lockConveyorBelt);
-
-            try
+            for (int i = 0; i < conveyorBelt.Length - 1; i++)
             {
-                for (int i = 0; i < conveyorBelt.Length - 1; i++)
-                {
-                    conveyorBelt[i] = conveyorBelt[i + 1];
-                }
-
-                bufferCounter -= 1;
+                conveyorBelt[i] = conveyorBelt[i + 1];
             }
-            finally
-            {
-                //Monitor.Exit(_lockConveyorBelt);
-            }
+            bufferCounter -= 1;
         }
         #endregion
     }
