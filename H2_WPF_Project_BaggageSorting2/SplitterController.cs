@@ -28,6 +28,7 @@ namespace H2_WPF_Project_BaggageSorting2
         private void SplitterSorting(int splitterNumber)
         {
             Random random = new Random();
+
             while (true)
             {
                 Thread.Sleep(random.Next(500, 3000));
@@ -52,6 +53,25 @@ namespace H2_WPF_Project_BaggageSorting2
 
                     BaggageArrivedInSplitterDetermineListener(splitterNumber, baggage);
                 }
+
+                BaggageLeavesSplitter(baggage);
+            }
+        }
+
+        private void BaggageLeavesSplitter(Baggage baggage)
+        {
+            ConveyorBeltGateController conveyorBeltGateController = new ConveyorBeltGateController();
+
+            if (baggage == null)
+            {
+
+            }
+            else
+            {
+                baggage.LeftSplitter = DateTime.Now;
+                Debug.WriteLine($"Bag {baggage.BaggageId} left splitter at {baggage.LeftSplitter}");
+
+                conveyorBeltGateController.CheckFlightNumbers(baggage);
             }
         }
 
