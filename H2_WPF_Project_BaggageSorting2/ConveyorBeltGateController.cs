@@ -44,6 +44,7 @@ namespace H2_WPF_Project_BaggageSorting2
             }
             else
             {
+                // Make somewhere to put lost bags
                 Debug.WriteLine($"Bag {baggage.BaggageId} got tossed in the trash.");
             }
         }

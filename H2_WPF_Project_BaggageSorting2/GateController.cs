@@ -70,10 +70,10 @@ namespace H2_WPF_Project_BaggageSorting2
                 Monitor.Exit(_lockFlightPlan);
             }
 
-            // Some method here
+            GetBaggageFromConveyorBelt(gate);
         }
         
-        private void BaggageArrives(Gate gate)
+        private void GetBaggageFromConveyorBelt(Gate gate)
         {
 
         }
