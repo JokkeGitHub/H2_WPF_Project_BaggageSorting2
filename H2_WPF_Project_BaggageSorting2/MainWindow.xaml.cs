@@ -278,14 +278,11 @@ namespace H2_WPF_Project_BaggageSorting2
                     {
                         case bool when ((GateEvent)e).Gate.Open == true:
                             Gate1OpenOrClosed.Background = new SolidColorBrush(Colors.Green);
-                            DestinationGate1.Background = new SolidColorBrush(Colors.Green);
                             break;
 
                         case bool when ((GateEvent)e).Gate.Open == false:
                             Gate1OpenOrClosed.Background = new SolidColorBrush(Colors.Red);
-                            DestinationGate1.Background = new SolidColorBrush(Colors.Red);
                             Gate1.Content = "";
-                            DestinationGate1.Content = "";
                             break;
 
                         default:
@@ -305,14 +302,11 @@ namespace H2_WPF_Project_BaggageSorting2
                     {
                         case bool when ((GateEvent)e).Gate.Open == true:
                             Gate2OpenOrClosed.Background = new SolidColorBrush(Colors.Green);
-                            DestinationGate2.Background = new SolidColorBrush(Colors.Green);
                             break;
 
                         case bool when ((GateEvent)e).Gate.Open == false:
                             Gate2OpenOrClosed.Background = new SolidColorBrush(Colors.Red);
-                            DestinationGate2.Background = new SolidColorBrush(Colors.Red);
                             Gate2.Content = "";
-                            DestinationGate2.Content = "";
                             break;
 
                         default:
@@ -332,14 +326,11 @@ namespace H2_WPF_Project_BaggageSorting2
                     {
                         case bool when ((GateEvent)e).Gate.Open == true:
                             Gate3OpenOrClosed.Background = new SolidColorBrush(Colors.Green);
-                            DestinationGate3.Background = new SolidColorBrush(Colors.Green);
                             break;
 
                         case bool when ((GateEvent)e).Gate.Open == false:
                             Gate3OpenOrClosed.Background = new SolidColorBrush(Colors.Red);
-                            DestinationGate3.Background = new SolidColorBrush(Colors.Red);
                             Gate3.Content = "";
-                            DestinationGate3.Content = "";
                             break;
 
                         default:
@@ -357,7 +348,16 @@ namespace H2_WPF_Project_BaggageSorting2
             {
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
                 {
-                    DestinationGate1.Content = ((GateEvent)e).Gate.FlightNumber;
+                    if (((GateEvent)e).Gate.FlightNumber == 0)
+                    {
+                        DestinationGate1.Background = new SolidColorBrush(Colors.Red);
+                        DestinationGate1.Content = "NO PLANE";
+                    }
+                    else
+                    {
+                        DestinationGate1.Background = new SolidColorBrush(Colors.Green);
+                        DestinationGate1.Content = ((GateEvent)e).Gate.FlightNumber;
+                    }
                 }));
             }
         }
@@ -367,7 +367,16 @@ namespace H2_WPF_Project_BaggageSorting2
             {
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
                 {
-                    DestinationGate2.Content = ((GateEvent)e).Gate.FlightNumber;
+                    if (((GateEvent)e).Gate.FlightNumber == 0)
+                    {
+                        DestinationGate2.Background = new SolidColorBrush(Colors.Red);
+                        DestinationGate2.Content = "NO PLANE";
+                    }
+                    else
+                    {
+                        DestinationGate2.Background = new SolidColorBrush(Colors.Green);
+                        DestinationGate2.Content = ((GateEvent)e).Gate.FlightNumber;
+                    }
                 }));
             }
         }
@@ -377,7 +386,16 @@ namespace H2_WPF_Project_BaggageSorting2
             {
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
                 {
-                    DestinationGate3.Content = ((GateEvent)e).Gate.FlightNumber;
+                    if (((GateEvent)e).Gate.FlightNumber == 0)
+                    {
+                        DestinationGate3.Background = new SolidColorBrush(Colors.Red);
+                        DestinationGate3.Content = "NO PLANE";
+                    }
+                    else
+                    {
+                        DestinationGate3.Background = new SolidColorBrush(Colors.Green);
+                        DestinationGate3.Content = ((GateEvent)e).Gate.FlightNumber;
+                    }
                 }));
             }
         }

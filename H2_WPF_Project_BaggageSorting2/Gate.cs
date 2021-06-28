@@ -12,6 +12,8 @@ namespace H2_WPF_Project_BaggageSorting2
         private string _gateName;
         private bool _open;
         private int _flightNumber;
+        private string _destination;
+        private DateTime _departure;
 
         public string GateName
         {
@@ -46,12 +48,35 @@ namespace H2_WPF_Project_BaggageSorting2
                 this._flightNumber = value;
             }
         }
+        public string Destination
+        {
+            get
+            {
+                return this._destination;
+            }
+            set
+            {
+                this._destination = value;
+            }
+        }
+        public DateTime Departure
+        {
+            get
+            {
+                return this._departure;
+            }
+            set
+            {
+                this._departure = value;
+            }
+        }
 
-        public Gate(string gateName, bool open, int flightNumber)
+        public Gate(string gateName, bool open, int flightNumber, string destination)
         {
             GateName = gateName;
             Open = open;
             FlightNumber = flightNumber;
+            Destination = destination;
         }
 
         public bool OpenOrClosed(bool open, int remainingFlightPlans)
@@ -60,7 +85,7 @@ namespace H2_WPF_Project_BaggageSorting2
 
             Random random = new Random();
 
-            if (remainingFlightPlans == 0)
+            if (remainingFlightPlans == 0 || FlightNumber == 0)
             {
                 open = false;
             }
@@ -79,9 +104,10 @@ namespace H2_WPF_Project_BaggageSorting2
                     default:
                         break;
                 }
-
-                Debug.WriteLine($"{GateName} Open = {open}");
             }
+
+            Debug.WriteLine($"{GateName} Open = {open}");
+
             return open;
         }
     }

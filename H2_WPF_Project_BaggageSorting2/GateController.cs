@@ -41,45 +41,8 @@ namespace H2_WPF_Project_BaggageSorting2
 
             while (true)
             {
-                if (gate.Open == true)
-                {
-                    Thread.Sleep(random.Next(200, 2000));
-                    GetFlightPlanInfo(gate);
-                }
 
-                Thread.Sleep(random.Next(700, 4000));
-                gate.Open = gate.OpenOrClosed(gate.Open, remainingFlightPlans);
-                OpenClosedDetermineListener(gate);
             }
-        }
-        private void GetFlightPlanInfo(Gate gate)
-        {
-            Monitor.Enter(_lockFlightPlan);
-            try
-            {
-                if (remainingFlightPlans == 0)
-                {
-                    Debug.WriteLine("No more flights");
-                }
-                else
-                {
-                    gate.FlightNumber = flightPlan[0].FlightNumber;
-                    Debug.WriteLine($"{gate.GateName} received Flight Number {gate.FlightNumber}");
-
-                    NextFlightPlan();
-
-                    Thread.Sleep(random.Next(100, 1000));
-                    Monitor.PulseAll(_lockFlightPlan);
-
-                    //CreateBaggage(reception, passengerId, flightNumber);
-                }
-            }
-            finally
-            {
-                Monitor.Exit(_lockFlightPlan);
-            }
-
-            FlightNumberDetermineListener(gate);
         }
 
         private void NextFlightPlan()
@@ -100,6 +63,59 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
 
+        /*
+        private void StartGate()
+        {
+            GateFactory gateFactory = new GateFactory();
+            Gate gate = gateFactory.Create();
+
+            while (true)
+            {
+
+                Thread.Sleep(random.Next(700, 4000));
+                GetFlightPlanInfo(gate);
+
+                Thread.Sleep(random.Next(200, 2000));
+                gate.Open = gate.OpenOrClosed(gate.Open, remainingFlightPlans);
+                OpenClosedDetermineListener(gate);
+
+
+            }
+        }
+
+        private void GetFlightPlanInfo(Gate gate)
+        {
+            DateTime departure = DateTime.Now;
+
+            Monitor.Enter(_lockFlightPlan);
+            try
+            {
+                if (remainingFlightPlans == 0)
+                {
+                    Debug.WriteLine("No more flights");
+                }
+                else
+                {
+                    gate.FlightNumber = flightPlan[0].FlightNumber;
+                    Debug.WriteLine($"{gate.GateName} received Flight Number {gate.FlightNumber}");
+                    departure = flightPlan[0].Departure;
+
+                    NextFlightPlan();
+
+                    Thread.Sleep(random.Next(100, 1000));
+                    Monitor.PulseAll(_lockFlightPlan);
+
+                }
+            }
+            finally
+            {
+                Monitor.Exit(_lockFlightPlan);
+            }
+
+            FlightNumberDetermineListener(gate);
+
+        }
+        */
         // New class for these?
         private void OpenClosedDetermineListener(Gate gate)
         {
