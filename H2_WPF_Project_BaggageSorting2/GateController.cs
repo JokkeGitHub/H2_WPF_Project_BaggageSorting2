@@ -14,8 +14,8 @@ namespace H2_WPF_Project_BaggageSorting2
 
         static CentralServer centralServer = new CentralServer();
         static FlightPlan[] flightPlan = centralServer.GetFlightPlan();
-        static int remainingFlightPlans = flightPlan.Length;
-        static object _lockFlightPlan = new object();
+        int remainingFlightPlans = flightPlan.Length;
+        object _lockFlightPlan = new object();
 
         public EventHandler OpenOrClosedGate1;
         public EventHandler OpenOrClosedGate2;
@@ -70,6 +70,11 @@ namespace H2_WPF_Project_BaggageSorting2
                 Monitor.Exit(_lockFlightPlan);
             }
 
+            // Some method here
+        }
+        
+        private void BaggageArrives(Gate gate)
+        {
 
         }
 

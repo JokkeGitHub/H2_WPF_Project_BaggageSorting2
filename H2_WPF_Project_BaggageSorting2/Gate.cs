@@ -14,6 +14,7 @@ namespace H2_WPF_Project_BaggageSorting2
         private int _flightNumber;
         private string _destination;
         private DateTime _departure;
+        private Baggage[] _baggageCart;
 
         public string GateName
         {
@@ -70,13 +71,25 @@ namespace H2_WPF_Project_BaggageSorting2
                 this._departure = value;
             }
         }
+        public Baggage[] BaggageCart
+        {
+            get
+            {
+                return this._baggageCart;
+            }
+            set
+            {
+                this._baggageCart = value;
+            }
+        }
 
-        public Gate(string gateName, bool open, int flightNumber, string destination)
+        public Gate(string gateName, bool open, int flightNumber, string destination, Baggage[] baggageCart)
         {
             GateName = gateName;
             Open = open;
             FlightNumber = flightNumber;
             Destination = destination;
+            BaggageCart = baggageCart;
         }
 
         public bool OpenOrClosed(bool open, int remainingFlightPlans)

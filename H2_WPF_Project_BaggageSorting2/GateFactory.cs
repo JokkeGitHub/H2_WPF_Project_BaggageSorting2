@@ -14,8 +14,9 @@ namespace H2_WPF_Project_BaggageSorting2
         {
             gateNumber += 1;
             string gateName = $"Gate{gateNumber}";
+            Baggage[] baggageCart = new Baggage[15];
 
-            return new Gate(gateName, false, 0, "");
+            return new Gate(gateName, false, 0, "", baggageCart);
         }
     }
 }

@@ -9,8 +9,8 @@ namespace H2_WPF_Project_BaggageSorting2
 {
     public class ConveyorBeltController
     {
-        public static int bufferCounter = -1;
-        public static Baggage[] conveyorBelt = new Baggage[50];
+        static int bufferCounter = -1;
+        static Baggage[] conveyorBelt = new Baggage[50];
 
         static object _lockConveyorBelt = new object();
 
@@ -27,9 +27,6 @@ namespace H2_WPF_Project_BaggageSorting2
                 bufferCounter += 1;
                 conveyorBelt[bufferCounter] = baggage;
                 Debug.WriteLine($"Bag {conveyorBelt[bufferCounter].BaggageId}, arrived at conveyor belt, from {counterName}");
-
-                /*MainWindow mainWindow = new MainWindow();
-                mainWindow.ConveyorTest();*/
 
                 Monitor.PulseAll(_lockConveyorBelt);
             }
