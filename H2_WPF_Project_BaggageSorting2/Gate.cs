@@ -85,7 +85,7 @@ namespace H2_WPF_Project_BaggageSorting2
 
             Random random = new Random();
 
-            if (remainingFlightPlans == 0 || FlightNumber == 0)
+            if (remainingFlightPlans == 0)
             {
                 open = false;
             }

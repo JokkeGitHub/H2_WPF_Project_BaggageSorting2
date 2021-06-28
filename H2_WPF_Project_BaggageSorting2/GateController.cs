@@ -41,8 +41,36 @@ namespace H2_WPF_Project_BaggageSorting2
 
             while (true)
             {
-
+                Thread.Sleep(random.Next(700, 4000));
+                gate.Open = gate.OpenOrClosed(gate.Open, remainingFlightPlans);
+                GetFlightPlanInfo(gate);
             }
+        }
+
+        private void GetFlightPlanInfo(Gate gate)
+        {
+            Monitor.Enter(_lockFlightPlan);
+            try
+            {
+                if (gate.Open == true)
+                {
+                    gate.FlightNumber = flightPlan[0].FlightNumber;
+                    gate.Destination = flightPlan[0].Destination;
+                    gate.Departure = flightPlan[0].Departure;
+
+                    Debug.WriteLine($"{gate.GateName} flight {gate.FlightNumber} arrived. Detination {gate.Destination}, departs at {gate.Departure}");
+
+                    NextFlightPlan();
+                }
+
+                Monitor.PulseAll(_lockFlightPlan);
+            }
+            finally
+            {
+                Monitor.Exit(_lockFlightPlan);
+            }
+
+
         }
 
         private void NextFlightPlan()
