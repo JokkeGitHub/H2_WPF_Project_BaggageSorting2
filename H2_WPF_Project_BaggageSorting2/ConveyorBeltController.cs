@@ -14,11 +14,6 @@ namespace H2_WPF_Project_BaggageSorting2
 
         static object _lockConveyorBelt = new object();
 
-        public Baggage[] GetConveyorBelt()
-        {
-            return (Baggage[])conveyorBelt.Clone();
-        }
-
         public void AddBagToConveyorBelt(Baggage baggage, string counterName)
         {
             Monitor.Enter(_lockConveyorBelt);

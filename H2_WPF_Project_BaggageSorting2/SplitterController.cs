@@ -31,7 +31,7 @@ namespace H2_WPF_Project_BaggageSorting2
 
             while (true)
             {
-                Thread.Sleep(random.Next(500, 3000));
+                Thread.Sleep(random.Next(100, 500));
 
                 Baggage baggage = new Baggage(0, 0, 0);
 
@@ -62,11 +62,7 @@ namespace H2_WPF_Project_BaggageSorting2
         {
             ConveyorBeltGateController conveyorBeltGateController = new ConveyorBeltGateController();
 
-            if (baggage == null)
-            {
-
-            }
-            else
+            if (baggage != null)
             {
                 baggage.LeftSplitter = DateTime.Now;
                 Debug.WriteLine($"Bag {baggage.BaggageId} left splitter at {baggage.LeftSplitter}");

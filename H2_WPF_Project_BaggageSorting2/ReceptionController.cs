@@ -50,11 +50,11 @@ namespace H2_WPF_Project_BaggageSorting2
             {
                 if (reception.Open == true)
                 {
-                    Thread.Sleep(random.Next(100, 1000));
+                    Thread.Sleep(random.Next(100, 500));
                     GetReservationInfo(reception);
                 }
 
-                Thread.Sleep(random.Next(100, 1000));
+                Thread.Sleep(random.Next(100, 500));
                 reception.Open = reception.OpenOrClosed(reception.Open, remainingReservations);
                 OpenClosedDetermineListener(reception);
             }
@@ -75,7 +75,7 @@ namespace H2_WPF_Project_BaggageSorting2
                     int flightNumber = reservations[0].FlightNumber;
                     NextReservation();
 
-                    Thread.Sleep(random.Next(100, 1000));
+                    Thread.Sleep(random.Next(100, 500));
                     Monitor.PulseAll(_lockReservation);
 
                     CreateBaggage(reception, passengerId, flightNumber);
@@ -104,9 +104,9 @@ namespace H2_WPF_Project_BaggageSorting2
             ConveyorBeltController conveyorBeltController = new ConveyorBeltController();
 
             Monitor.Enter(_lockConveyorBelt);
-
             try
             {
+                Thread.Sleep(random.Next(100, 500));
                 baggage.LeftReception = DateTime.Now;
 
                 Debug.WriteLine($"Bag {baggage.BaggageId} left {reception.CounterName} at {baggage.LeftReception}");

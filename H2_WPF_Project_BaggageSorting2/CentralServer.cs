@@ -8,16 +8,16 @@ namespace H2_WPF_Project_BaggageSorting2
 
         static FlightPlan[] flightPlanList = new FlightPlan[]
         {
-            new FlightPlan(101, "Stockholm", DateTime.Now.AddSeconds(20)),
-            new FlightPlan(102, "Berlin", DateTime.Now.AddSeconds(20)),
-            new FlightPlan(103, "Paris", DateTime.Now.AddSeconds(20)),
-            new FlightPlan(104, "London", DateTime.Now.AddSeconds(50)),
-            new FlightPlan(105, "Hong Kong", DateTime.Now.AddSeconds(50)),
-            new FlightPlan(106, "Washington D.C.", DateTime.Now.AddSeconds(80)),
-            new FlightPlan(107, "Rome", DateTime.Now.AddSeconds(80)),
-            new FlightPlan(108, "Vienna", DateTime.Now.AddSeconds(80)),
-            new FlightPlan(109, "Tokyo", DateTime.Now.AddSeconds(110)),
-            new FlightPlan(110, "Oslo", DateTime.Now.AddSeconds(110))
+            new FlightPlan(101, "Stockholm", DateTime.Now.AddSeconds(60)),
+            new FlightPlan(102, "Berlin", DateTime.Now.AddSeconds(60)),
+            new FlightPlan(103, "Paris", DateTime.Now.AddSeconds(120)),
+            new FlightPlan(104, "London", DateTime.Now.AddSeconds(120)),
+            new FlightPlan(105, "Hong Kong", DateTime.Now.AddSeconds(120)),
+            new FlightPlan(106, "Washington D.C.", DateTime.Now.AddSeconds(180)),
+            new FlightPlan(107, "Rome", DateTime.Now.AddSeconds(180)),
+            new FlightPlan(108, "Vienna", DateTime.Now.AddSeconds(240)),
+            new FlightPlan(109, "Tokyo", DateTime.Now.AddSeconds(240)),
+            new FlightPlan(110, "Oslo", DateTime.Now.AddSeconds(240))
         };
 
         static Reservation[] reservationList = new Reservation[]

@@ -72,6 +72,10 @@ namespace H2_WPF_Project_BaggageSorting2
             gateController.OpenOrClosedGate1 += OnOpenOrClosedGate1;
             gateController.OpenOrClosedGate2 += OnOpenOrClosedGate2;
             gateController.OpenOrClosedGate3 += OnOpenOrClosedGate3;
+
+            gateController.BaggageArrivedGate1 += OnBaggageArrivedGate1;
+            gateController.BaggageArrivedGate2 += OnBaggageArrivedGate2;
+            gateController.BaggageArrivedGate3 += OnBaggageArrivedGate3;
             /*
             gateController.FlightPlanGate1 += OnFlightPlanGate1;
             gateController.FlightPlanGate2 += OnFlightPlanGate2;
@@ -359,65 +363,37 @@ namespace H2_WPF_Project_BaggageSorting2
         }
         #endregion
 
-        /*
-        #region OnFlightPlanGate Events
-        private void OnFlightPlanGate1(object sender, EventArgs e)
+        #region OnBaggageArrivedGate Events
+        private void OnBaggageArrivedGate1(object sender, EventArgs e)
         {
-            if (e is GateEvent)
+            if (e is BaggageEvent)
             {
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
                 {
-                    if (((GateEvent)e).Gate.FlightNumber == 0)
-                    {
-                        DestinationGate1.Background = new SolidColorBrush(Colors.Red);
-                        DestinationGate1.Content = "NO PLANE";
-                    }
-                    else
-                    {
-                        DestinationGate1.Background = new SolidColorBrush(Colors.Green);
-                        DestinationGate1.Content = ((GateEvent)e).Gate.FlightNumber;
-                    }
+                    Gate1.Content = ((BaggageEvent)e).Baggage.BaggageId;
                 }));
             }
         }
-        private void OnFlightPlanGate2(object sender, EventArgs e)
+        private void OnBaggageArrivedGate2(object sender, EventArgs e)
         {
-            if (e is GateEvent)
+            if (e is BaggageEvent)
             {
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
                 {
-                    if (((GateEvent)e).Gate.FlightNumber == 0)
-                    {
-                        DestinationGate2.Background = new SolidColorBrush(Colors.Red);
-                        DestinationGate2.Content = "NO PLANE";
-                    }
-                    else
-                    {
-                        DestinationGate2.Background = new SolidColorBrush(Colors.Green);
-                        DestinationGate2.Content = ((GateEvent)e).Gate.FlightNumber;
-                    }
+                    Gate2.Content = ((BaggageEvent)e).Baggage.BaggageId;
                 }));
             }
         }
-        private void OnFlightPlanGate3(object sender, EventArgs e)
+        private void OnBaggageArrivedGate3(object sender, EventArgs e)
         {
-            if (e is GateEvent)
+            if (e is BaggageEvent)
             {
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
                 {
-                    if (((GateEvent)e).Gate.FlightNumber == 0)
-                    {
-                        DestinationGate3.Background = new SolidColorBrush(Colors.Red);
-                        DestinationGate3.Content = "NO PLANE";
-                    }
-                    else
-                    {
-                        DestinationGate3.Background = new SolidColorBrush(Colors.Green);
-                        DestinationGate3.Content = ((GateEvent)e).Gate.FlightNumber;
-                    }
+                    Gate3.Content = ((BaggageEvent)e).Baggage.BaggageId;
                 }));
             }
         }
-        #endregion*/
+        #endregion
     }
 }

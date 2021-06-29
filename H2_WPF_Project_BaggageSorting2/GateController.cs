@@ -22,10 +22,10 @@ namespace H2_WPF_Project_BaggageSorting2
         public EventHandler OpenOrClosedGate1;
         public EventHandler OpenOrClosedGate2;
         public EventHandler OpenOrClosedGate3;
-        /*
-        public EventHandler FlightPlanGate1;
-        public EventHandler FlightPlanGate2;
-        public EventHandler FlightPlanGate3;*/
+        
+        public EventHandler BaggageArrivedGate1;
+        public EventHandler BaggageArrivedGate2;
+        public EventHandler BaggageArrivedGate3;
 
         public GateController()
         {
@@ -75,12 +75,29 @@ namespace H2_WPF_Project_BaggageSorting2
             }
 
             OpenClosedDetermineListener(gate);
-            GetBaggageFromConveyorBelt(gate);
+            PlaneBoarding(gate);
         }
-        
-        private void GetBaggageFromConveyorBelt(Gate gate)
+
+        private void PlaneBoarding(Gate gate)
         {
-            Thread.Sleep(random.Next(700, 4000));
+            if (gate.Open == true)
+            {
+                Baggage baggage = new Baggage(0, 0, 0);
+                while (DateTime.Now < gate.Departure)
+                {
+                    baggage = conveyorBeltGateController.GetBaggage(gate);
+
+                    if (baggage != null)
+                    {
+                        baggage.ArrivedAtGate = DateTime.Now;
+
+                        BaggageArrivedInGate(gate, baggage);
+                        Debug.WriteLine($"Bag {baggage.BaggageId} arrived in {gate.GateName} at {baggage.ArrivedAtGate} for flight {baggage.FlightNumber}");
+                    }
+                }
+
+                Debug.WriteLine($"Flight {gate.FlightNumber}, destination {gate.Destination} has left {gate.GateName} at {gate.Departure}");
+            }
         }
 
         private void NextFlightPlan()
@@ -169,6 +186,27 @@ namespace H2_WPF_Project_BaggageSorting2
 
                 case "Gate3":
                     OpenOrClosedGate3?.Invoke(this, new GateEvent(gate));
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void BaggageArrivedInGate(Gate gate, Baggage baggage)
+        {
+            switch (gate.GateName)
+            {
+                case "Gate1":
+                    BaggageArrivedGate1?.Invoke(this, new BaggageEvent(baggage));
+                    break;
+
+                case "Gate2":
+                    BaggageArrivedGate2?.Invoke(this, new BaggageEvent(baggage));
+                    break;
+
+                case "Gate3":
+                    BaggageArrivedGate3?.Invoke(this, new BaggageEvent(baggage));
                     break;
 
                 default:
