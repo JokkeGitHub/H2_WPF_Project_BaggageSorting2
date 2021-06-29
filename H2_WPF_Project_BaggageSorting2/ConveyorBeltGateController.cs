@@ -102,5 +102,27 @@ namespace H2_WPF_Project_BaggageSorting2
                 Monitor.Exit(_lockConveyorBeltGate3);
             }
         }
+
+        public void AddFlightNumber(Gate gate)
+        {
+            switch (gate.GateName)
+            {
+                case "Gate1":
+                    flightNumberGate1 = gate.FlightNumber;
+                    break;
+
+                case "Gate2":
+                    flightNumberGate2 = gate.FlightNumber;
+                    break;
+
+                case "Gate3":
+                    flightNumberGate3 = gate.FlightNumber;
+                    break;
+
+                default:
+                    break;
+            }
+            Debug.WriteLine($"Conveyor at {gate.GateName} received new flight number {gate.FlightNumber}");
+        }
     }
 }

@@ -12,6 +12,8 @@ namespace H2_WPF_Project_BaggageSorting2
         // This class is responsible for receiving bags
         Random random = new Random();
 
+        ConveyorBeltGateController conveyorBeltGateController = new ConveyorBeltGateController();
+
         static CentralServer centralServer = new CentralServer();
         static FlightPlan[] flightPlan = centralServer.GetFlightPlan();
         int remainingFlightPlans = flightPlan.Length;
@@ -20,10 +22,10 @@ namespace H2_WPF_Project_BaggageSorting2
         public EventHandler OpenOrClosedGate1;
         public EventHandler OpenOrClosedGate2;
         public EventHandler OpenOrClosedGate3;
-
+        /*
         public EventHandler FlightPlanGate1;
         public EventHandler FlightPlanGate2;
-        public EventHandler FlightPlanGate3;
+        public EventHandler FlightPlanGate3;*/
 
         public GateController()
         {
@@ -41,7 +43,6 @@ namespace H2_WPF_Project_BaggageSorting2
 
             while (true)
             {
-                Thread.Sleep(random.Next(700, 4000));
                 gate.Open = gate.OpenOrClosed(gate.Open, remainingFlightPlans);
                 GetFlightPlanInfo(gate);
             }
@@ -52,6 +53,8 @@ namespace H2_WPF_Project_BaggageSorting2
             Monitor.Enter(_lockFlightPlan);
             try
             {
+                // If remainingFlightPlans == 0, No more
+                //else if v
                 if (gate.Open == true)
                 {
                     gate.FlightNumber = flightPlan[0].FlightNumber;
@@ -60,6 +63,7 @@ namespace H2_WPF_Project_BaggageSorting2
 
                     Debug.WriteLine($"{gate.GateName} flight {gate.FlightNumber} arrived. Detination {gate.Destination}, departs at {gate.Departure}");
 
+                    conveyorBeltGateController.AddFlightNumber(gate);
                     NextFlightPlan();
                 }
 
@@ -70,12 +74,13 @@ namespace H2_WPF_Project_BaggageSorting2
                 Monitor.Exit(_lockFlightPlan);
             }
 
+            OpenClosedDetermineListener(gate);
             GetBaggageFromConveyorBelt(gate);
         }
         
         private void GetBaggageFromConveyorBelt(Gate gate)
         {
-
+            Thread.Sleep(random.Next(700, 4000));
         }
 
         private void NextFlightPlan()
@@ -171,6 +176,7 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
 
+        /*
         private void FlightNumberDetermineListener(Gate gate)
         {
             switch (gate.GateName)
@@ -190,6 +196,6 @@ namespace H2_WPF_Project_BaggageSorting2
                 default:
                     break;
             }
-        }
+        }*/
     }
 }

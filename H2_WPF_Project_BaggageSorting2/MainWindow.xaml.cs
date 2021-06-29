@@ -72,10 +72,10 @@ namespace H2_WPF_Project_BaggageSorting2
             gateController.OpenOrClosedGate1 += OnOpenOrClosedGate1;
             gateController.OpenOrClosedGate2 += OnOpenOrClosedGate2;
             gateController.OpenOrClosedGate3 += OnOpenOrClosedGate3;
-
+            /*
             gateController.FlightPlanGate1 += OnFlightPlanGate1;
             gateController.FlightPlanGate2 += OnFlightPlanGate2;
-            gateController.FlightPlanGate3 += OnFlightPlanGate3;
+            gateController.FlightPlanGate3 += OnFlightPlanGate3;*/
         }
 
         #region OnBaggageCreated Events
@@ -278,10 +278,16 @@ namespace H2_WPF_Project_BaggageSorting2
                     {
                         case bool when ((GateEvent)e).Gate.Open == true:
                             Gate1OpenOrClosed.Background = new SolidColorBrush(Colors.Green);
+                            DestinationGate1.Background = new SolidColorBrush(Colors.Green);
+                            DestinationGate1.Content = ((GateEvent)e).Gate.Destination;
+                            FligtNumber1.Content = $"Flight {((GateEvent)e).Gate.FlightNumber}";
                             break;
 
                         case bool when ((GateEvent)e).Gate.Open == false:
                             Gate1OpenOrClosed.Background = new SolidColorBrush(Colors.Red);
+                            DestinationGate1.Background = new SolidColorBrush(Colors.Red);
+                            DestinationGate1.Content = "";
+                            FligtNumber1.Content = "NO PLANE";
                             Gate1.Content = "";
                             break;
 
@@ -302,10 +308,16 @@ namespace H2_WPF_Project_BaggageSorting2
                     {
                         case bool when ((GateEvent)e).Gate.Open == true:
                             Gate2OpenOrClosed.Background = new SolidColorBrush(Colors.Green);
+                            DestinationGate2.Background = new SolidColorBrush(Colors.Green);
+                            DestinationGate2.Content = ((GateEvent)e).Gate.Destination;
+                            FligtNumber2.Content = $"Flight {((GateEvent)e).Gate.FlightNumber}";
                             break;
 
                         case bool when ((GateEvent)e).Gate.Open == false:
                             Gate2OpenOrClosed.Background = new SolidColorBrush(Colors.Red);
+                            DestinationGate2.Background = new SolidColorBrush(Colors.Red);
+                            DestinationGate2.Content = "";
+                            FligtNumber2.Content = "NO PLANE";
                             Gate2.Content = "";
                             break;
 
@@ -326,10 +338,16 @@ namespace H2_WPF_Project_BaggageSorting2
                     {
                         case bool when ((GateEvent)e).Gate.Open == true:
                             Gate3OpenOrClosed.Background = new SolidColorBrush(Colors.Green);
+                            DestinationGate3.Background = new SolidColorBrush(Colors.Green);
+                            DestinationGate3.Content = ((GateEvent)e).Gate.Destination;
+                            FligtNumber3.Content = $"Flight {((GateEvent)e).Gate.FlightNumber}";
                             break;
 
                         case bool when ((GateEvent)e).Gate.Open == false:
                             Gate3OpenOrClosed.Background = new SolidColorBrush(Colors.Red);
+                            DestinationGate3.Background = new SolidColorBrush(Colors.Red);
+                            DestinationGate3.Content = "";
+                            FligtNumber3.Content = "NO PLANE";
                             Gate3.Content = "";
                             break;
 
@@ -341,6 +359,7 @@ namespace H2_WPF_Project_BaggageSorting2
         }
         #endregion
 
+        /*
         #region OnFlightPlanGate Events
         private void OnFlightPlanGate1(object sender, EventArgs e)
         {
@@ -399,6 +418,6 @@ namespace H2_WPF_Project_BaggageSorting2
                 }));
             }
         }
-        #endregion
+        #endregion*/
     }
 }

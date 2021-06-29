@@ -119,13 +119,13 @@
         <Label x:Name="Gate3" Background="LightGray" FontSize="22" Grid.Column="21" Grid.Row="8" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
         
         <!-- Gate Destination Buttons -->
-        <Label x:Name="DestinationGate1Button" Background="Gray" Content="Plane 101" FontSize="26" Grid.Column="24" Grid.Row="1" Grid.ColumnSpan="4" BorderThickness="1" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Top"></Label>
-        <Button x:Name="DestinationGate2Button" Background="Gray" Content="Destination" FontSize="26" Grid.Column="24" Grid.Row="4" Grid.ColumnSpan="4" BorderThickness="1" BorderBrush="Black"></Button>
-        <Button x:Name="DestinationGate3Button" Background="Gray" Content="Destination" FontSize="26" Grid.Column="24" Grid.Row="7" Grid.ColumnSpan="4" BorderThickness="1" BorderBrush="Black"></Button>
+        <Label x:Name="FligtNumber1" Background="Gray" Content="NO PLANE" FontSize="21" Grid.Column="24" Grid.Row="1" Grid.ColumnSpan="5" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Top"></Label>
+        <Label x:Name="FligtNumber2" Background="Gray" Content="NO PLANE" FontSize="21" Grid.Column="24" Grid.Row="4" Grid.ColumnSpan="5" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Top"></Label>
+        <Label x:Name="FligtNumber3" Background="Gray" Content="NO PLANE" FontSize="21" Grid.Column="24" Grid.Row="7" Grid.ColumnSpan="5" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Top"></Label>
         <!-- Gate Destination Labels -->
-        <Label x:Name="DestinationGate1" Background="Red" Content="NO PLANE" FontSize="22" Grid.Column="24" Grid.Row="2" Grid.ColumnSpan="4" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
-        <Label x:Name="DestinationGate2" Background="Red" Content="NO PLANE"  FontSize="22" Grid.Column="24" Grid.Row="5" Grid.ColumnSpan="4" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
-        <Label x:Name="DestinationGate3" Background="Red" Content="NO PLANE"  FontSize="22" Grid.Column="24" Grid.Row="8" Grid.ColumnSpan="4" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center"></Label>
+        <Label x:Name="DestinationGate1" Background="Red" Content="" FontSize="21" Grid.Column="24" Grid.Row="2" Grid.ColumnSpan="5" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Top"></Label>
+        <Label x:Name="DestinationGate2" Background="Red" Content=""  FontSize="21" Grid.Column="24" Grid.Row="5" Grid.ColumnSpan="5" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Top"></Label>
+        <Label x:Name="DestinationGate3" Background="Red" Content=""  FontSize="21" Grid.Column="24" Grid.Row="8" Grid.ColumnSpan="5" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Top"></Label>
 
         <!-- Path from counter to conveyor-->
         <Path Stroke="Black" Data="M 0 22 L 170 22" Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="4"/>
