@@ -27,7 +27,6 @@ namespace H2_WPF_Project_BaggageSorting2
         public MainWindow()
         {
             InitializeComponent();
-
             //InitializeLabelList();
         }
 
@@ -53,6 +52,7 @@ namespace H2_WPF_Project_BaggageSorting2
             StartButton.Visibility = Visibility.Hidden;
 
             ReceptionController receptionController = new ReceptionController();
+            ConveyorBeltController conveyorBeltController = new ConveyorBeltController();
             SplitterController splitterController = new SplitterController();
             GateController gateController = new GateController();
 
@@ -65,6 +65,8 @@ namespace H2_WPF_Project_BaggageSorting2
             receptionController.OpenOrClosedCounter2 += OnOpenOrClosedCounter2;
             receptionController.OpenOrClosedCounter3 += OnOpenOrClosedCounter3;
             receptionController.OpenOrClosedCounter4 += OnOpenOrClosedCounter4;
+
+            //conveyorBeltController.BaggageInConveyorBelt += OnBaggageInConveyorBelt;
 
             splitterController.BaggageArrivedInSplitter1 += OnBaggageArrivedInSplitter1;
             splitterController.BaggageArrivedInSplitter2 += OnBaggageArrivedInSplitter2;
@@ -227,6 +229,28 @@ namespace H2_WPF_Project_BaggageSorting2
         #endregion
 
         #region CONVEYOR BELT EVENTS ??????? NOT WORKING FIX THIS MOFUGGAH
+
+        public void ConveyorGUITest()
+        {
+            ConveyorBeltController conveyorBeltController = new ConveyorBeltController();
+
+            Baggage[] conveyorBelt = conveyorBeltController.GetConveyorBelt();
+
+            ConveyorBeltListBox.ItemsSource = conveyorBelt;
+        }
+
+        /*
+        private void OnBaggageInConveyorBelt(object sender, EventArgs e)
+        {
+            if (e is BaggageEvent)
+            {
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                {
+                    ConveyorBeltLabel0.Content = ((BaggageEvent)e).Baggage.BaggageId;
+                }));
+            }
+        }
+
         //Maybe Baggage event instead
         /*
         public void ConveyorTest()

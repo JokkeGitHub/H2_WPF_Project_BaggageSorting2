@@ -15,9 +15,6 @@ namespace H2_WPF_Project_BaggageSorting2
         public EventHandler BaggageArrivedInSplitter1;
         public EventHandler BaggageArrivedInSplitter2;
 
-        public EventHandler EmptySplitter1;
-        public EventHandler EmptySplitter2;
-
         public SplitterController()
         {
             for (int i = 1; i <= 2; i++)

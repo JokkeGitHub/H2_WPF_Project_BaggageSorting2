@@ -14,6 +14,13 @@ namespace H2_WPF_Project_BaggageSorting2
 
         static object _lockConveyorBelt = new object();
 
+        //public EventHandler BaggageInConveyorBelt;
+
+        public Baggage[] GetConveyorBelt()
+        {
+            return (Baggage[])conveyorBelt.Clone();
+        }
+
         public void AddBagToConveyorBelt(Baggage baggage, string counterName)
         {
             Monitor.Enter(_lockConveyorBelt);
@@ -29,7 +36,14 @@ namespace H2_WPF_Project_BaggageSorting2
             {
                 Monitor.Exit(_lockConveyorBelt);
             }
+
+            //DetermineListenerTest(baggage);
         }
+        /*
+                private void DetermineListenerTest(Baggage baggage)
+                {
+                    BaggageInConveyorBelt?.Invoke(this, new BaggageEvent(baggage));
+                }*/
 
         #region SPLITTERS CONVEYOR METHODS
         public Baggage GetBaggage(Baggage baggage)
@@ -61,8 +75,6 @@ namespace H2_WPF_Project_BaggageSorting2
             for (int i = 0; i < conveyorBelt.Length - 1; i++)
             {
                 conveyorBelt[i] = conveyorBelt[i + 1];
-
-                // BAGGAGE EVENT HERE ?????? ? :D
             }
             bufferCounter -= 1;
         }

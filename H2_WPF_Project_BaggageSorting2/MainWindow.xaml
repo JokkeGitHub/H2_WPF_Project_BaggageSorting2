@@ -82,9 +82,9 @@
         <!-- Conveyor Buttons -->
         <Button x:Name="ConveyorBeltButton" Background="Gray" Content="Conveyor" FontSize="26" Grid.Column="7" Grid.Row="1" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Black"></Button>
         <!-- Converyor Belt / Buffer ListBox-->
-        <!-- <ListBox x:Name="ConveyorBeltListBox" Background="LightGray" FontSize="15" Grid.Row="2" Grid.Column="7" Grid.RowSpan="12" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black"></ListBox>
--->
-        <Label x:Name="ConveyorBeltLabel0" Background="LightGray" FontSize="15" Grid.Row="2" Grid.Column="7" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black"></Label>
+        <ListBox x:Name="ConveyorBeltListBox" Background="LightGray" FontSize="15" Grid.Row="2" Grid.Column="7" Grid.RowSpan="12" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black"></ListBox>
+     <!--
+        <Label x:Name="ConveyorBeltLabel0" Content="" Background="LightGray" FontSize="26" Grid.Row="2" Grid.Column="7" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black" HorizontalContentAlignment="Center" VerticalContentAlignment="Top"></Label>
         <Label x:Name="ConveyorBeltLabel1" Background="LightGray" FontSize="15" Grid.Row="3" Grid.Column="7" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black"></Label>
         <Label x:Name="ConveyorBeltLabel2" Background="LightGray" FontSize="15" Grid.Row="4" Grid.Column="7" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black"></Label>
         <Label x:Name="ConveyorBeltLabel3" Background="LightGray" FontSize="15" Grid.Row="5" Grid.Column="7" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black"></Label>
@@ -96,7 +96,7 @@
         <Label x:Name="ConveyorBeltLabel9" Background="LightGray" FontSize="15" Grid.Row="11" Grid.Column="7" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black"></Label>
         <Label x:Name="ConveyorBeltLabel10" Background="LightGray" FontSize="15" Grid.Row="12" Grid.Column="7" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black"></Label>
         <Label x:Name="ConveyorBeltLabel11" Background="LightGray" FontSize="15" Grid.Row="13" Grid.Column="7" Grid.ColumnSpan="3" BorderThickness="2" BorderBrush="Black"></Label>
-
+-->
 
         <!-- Splitter Buttons -->
         <Button x:Name="Splitter1Button" Background="Gray" Content="Splitter1" FontSize="26" Grid.Column="13" Grid.Row="1" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="Black"></Button>
