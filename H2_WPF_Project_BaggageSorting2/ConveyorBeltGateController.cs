@@ -18,7 +18,7 @@ namespace H2_WPF_Project_BaggageSorting2
         static Baggage[] conveyorBeltToGate2 = new Baggage[50];
         static Baggage[] conveyorBeltToGate3 = new Baggage[50];
 
-        static Baggage[] lostBaggage = new Baggage[50];
+        static Baggage[] lostBaggageConveyorBelt = new Baggage[50];
 
         static int flightNumberGate1 = 0;
         static int flightNumberGate2 = 0;
@@ -28,9 +28,7 @@ namespace H2_WPF_Project_BaggageSorting2
         static object _lockConveyorBeltGate2 = new object();
         static object _lockConveyorBeltGate3 = new object();
 
-        static object _lockBuffer1 = new object();
-        static object _lockBuffer2 = new object();
-        static object _lockBuffer3 = new object();
+        static object _lockLostBaggageBelt = new object();
 
         #region Used by splitter
         public void CheckFlightNumbers(Baggage baggage)
@@ -52,9 +50,24 @@ namespace H2_WPF_Project_BaggageSorting2
             }
             else
             {
-                /*bufferLostBaggage += 1;
-                lostBaggage[bufferLostBaggage] = baggage;
-                Debug.WriteLine($"Bag {baggage.BaggageId} added to lost baggage");*/
+                AddBaggageToLostBaggage(baggage);
+            }
+        }
+
+        private void AddBaggageToLostBaggage(Baggage baggage)
+        {
+            Monitor.Enter(_lockLostBaggageBelt);
+            try
+            {
+                bufferLostBaggage = +1;
+                lostBaggageConveyorBelt[bufferLostBaggage] = baggage;
+                Debug.WriteLine($"Bag {baggage.BaggageId} added to lost baggage");
+
+                Monitor.PulseAll(_lockLostBaggageBelt);
+            }
+            finally
+            {
+                Monitor.Exit(_lockLostBaggageBelt);
             }
         }
 
