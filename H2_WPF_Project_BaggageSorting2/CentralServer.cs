@@ -4,7 +4,7 @@ namespace H2_WPF_Project_BaggageSorting2
 {
     public class CentralServer
     {
-        // This class represents a database server
+        // This class represents a database server, it contains information used by our system.
 
         static FlightPlan[] flightPlanList = new FlightPlan[]
         {
@@ -74,6 +74,7 @@ namespace H2_WPF_Project_BaggageSorting2
             new Reservation("John Doe", 1050, flightPlanList[0].FlightNumber, flightPlanList[0].Departure)
         };
 
+        // When these methods below are called, they return a clone of the called array
         public FlightPlan[] GetFlightPlan()
         {
             return (FlightPlan[])flightPlanList.Clone();

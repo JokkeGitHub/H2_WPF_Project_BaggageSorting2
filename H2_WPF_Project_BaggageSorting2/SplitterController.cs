@@ -41,7 +41,7 @@ namespace H2_WPF_Project_BaggageSorting2
                 Monitor.Enter(_lockGetBaggage);
                 try
                 {
-                    baggage = conveyorBeltController.GetBaggage(baggage);
+                    baggage = conveyorBeltController.CheckForBaggage(baggage);
                     Monitor.Pulse(_lockGetBaggage);
                 }
                 finally
