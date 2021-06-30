@@ -452,5 +452,6 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
         #endregion
+        // Maybe new events for flight numbers etc
     }
 }

@@ -1,26 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace H2_WPF_Project_BaggageSorting2
 {
     public class GateController
     {
-        // This class is responsible for receiving bags
+        // This class is responsible for the threads which run the gates
+
         Random random = new Random();
 
         ConveyorBeltGateController conveyorBeltGateController = new ConveyorBeltGateController();
-
         static CentralServer centralServer = new CentralServer();
+
         static FlightPlan[] flightPlan = centralServer.GetFlightPlan();
         int remainingFlightPlans = flightPlan.Length;
         object _lockFlightPlan = new object();
 
         int bufferBaggageCart = -1;
 
+        #region Event listeners
+        // our event listeners
         public EventHandler OpenOrClosedGate1;
         public EventHandler OpenOrClosedGate2;
         public EventHandler OpenOrClosedGate3;
@@ -28,7 +28,9 @@ namespace H2_WPF_Project_BaggageSorting2
         public EventHandler BaggageArrivedGate1;
         public EventHandler BaggageArrivedGate2;
         public EventHandler BaggageArrivedGate3;
+        #endregion
 
+        // This is where we start our threads
         public GateController()
         {
             for (int i = 1; i <= 3; i++)
@@ -38,6 +40,7 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
 
+        // This method is called by threads when they start
         private void StartGate()
         {
             GateFactory gateFactory = new GateFactory();
@@ -45,18 +48,25 @@ namespace H2_WPF_Project_BaggageSorting2
 
             while (true)
             {
-                gate.Open = gate.OpenOrClosed(gate.Open, remainingFlightPlans);
-                GetFlightPlanInfo(gate);
+                OpenOrClose(gate);
             }
         }
 
+        private void OpenOrClose(Gate gate)
+        {
+            gate.Open = gate.OpenOrClosed(gate.Open, remainingFlightPlans);
+            OpenClosedDetermineListener(gate);
+
+            Thread.Sleep(random.Next(500, 2000));
+            GetFlightPlanInfo(gate);
+        }
+
+        // This method is responsible for retrieving all the necessary info and passing them on to the gate
         private void GetFlightPlanInfo(Gate gate)
         {
             Monitor.Enter(_lockFlightPlan);
             try
             {
-                // If remainingFlightPlans == 0, No more
-                //else if v
                 if (gate.Open == true)
                 {
                     gate.FlightNumber = flightPlan[0].FlightNumber;
@@ -64,8 +74,8 @@ namespace H2_WPF_Project_BaggageSorting2
                     gate.Departure = flightPlan[0].Departure;
 
                     Debug.WriteLine($"{gate.GateName} flight {gate.FlightNumber} arrived. Detination {gate.Destination}, departs at {gate.Departure}");
-
                     conveyorBeltGateController.AddFlightNumber(gate);
+
                     NextFlightPlan();
                 }
 
@@ -80,6 +90,8 @@ namespace H2_WPF_Project_BaggageSorting2
             PlaneBoarding(gate);
         }
 
+        // This method is responsible for the "Plane boarding", before departure, all the baggage is collected from the buffer, 
+        // and is forwarded to the BaggageCart arrays
         private void PlaneBoarding(Gate gate)
         {
             if (gate.Open == true)
@@ -101,16 +113,20 @@ namespace H2_WPF_Project_BaggageSorting2
                     }
                 }
 
-                for (int i = 0; i < gate.BaggageCart.Length -1; i++)
-                {
-                }
-
-                    gate.BaggageCart = null;
-                bufferBaggageCart = -1;
-                Debug.WriteLine($"Flight {gate.FlightNumber}, destination {gate.Destination} has left {gate.GateName} at {gate.Departure}");
+                PlaneLeaves(gate);
             }
         }
 
+        // This method is resetting the buffer counter and the baggageCart arrays
+        private void PlaneLeaves(Gate gate)
+        {
+            gate.BaggageCart = null;
+            bufferBaggageCart = -1;
+            Debug.WriteLine($"Flight {gate.FlightNumber}, destination {gate.Destination} has left {gate.GateName} at {gate.Departure}");
+        }
+
+        // When this method is called it moves the flightplans around in the array, and decreases
+        // the flightplan counter
         private void NextFlightPlan()
         {
             Monitor.Enter(_lockFlightPlan);
@@ -120,7 +136,6 @@ namespace H2_WPF_Project_BaggageSorting2
                 {
                     flightPlan[i] = flightPlan[i + 1];
                 }
-
                 remainingFlightPlans -= 1;
             }
             finally
@@ -129,60 +144,8 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
 
-        /*
-        private void StartGate()
-        {
-            GateFactory gateFactory = new GateFactory();
-            Gate gate = gateFactory.Create();
-
-            while (true)
-            {
-
-                Thread.Sleep(random.Next(700, 4000));
-                GetFlightPlanInfo(gate);
-
-                Thread.Sleep(random.Next(200, 2000));
-                gate.Open = gate.OpenOrClosed(gate.Open, remainingFlightPlans);
-                OpenClosedDetermineListener(gate);
-
-
-            }
-        }
-
-        private void GetFlightPlanInfo(Gate gate)
-        {
-            DateTime departure = DateTime.Now;
-
-            Monitor.Enter(_lockFlightPlan);
-            try
-            {
-                if (remainingFlightPlans == 0)
-                {
-                    Debug.WriteLine("No more flights");
-                }
-                else
-                {
-                    gate.FlightNumber = flightPlan[0].FlightNumber;
-                    Debug.WriteLine($"{gate.GateName} received Flight Number {gate.FlightNumber}");
-                    departure = flightPlan[0].Departure;
-
-                    NextFlightPlan();
-
-                    Thread.Sleep(random.Next(100, 1000));
-                    Monitor.PulseAll(_lockFlightPlan);
-
-                }
-            }
-            finally
-            {
-                Monitor.Exit(_lockFlightPlan);
-            }
-
-            FlightNumberDetermineListener(gate);
-
-        }
-        */
-        // New class for these?
+        #region Listener Methods
+        // This checks the gate name, then invokes the corresponding listeners
         private void OpenClosedDetermineListener(Gate gate)
         {
             switch (gate.GateName)
@@ -204,6 +167,7 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
 
+        // This checks the gate name, then invokes the corresponding listeners
         private void BaggageArrivedInGate(Gate gate, Baggage baggage)
         {
             switch (gate.GateName)
@@ -224,27 +188,6 @@ namespace H2_WPF_Project_BaggageSorting2
                     break;
             }
         }
-
-        /*
-        private void FlightNumberDetermineListener(Gate gate)
-        {
-            switch (gate.GateName)
-            {
-                case "Gate1":
-                    FlightPlanGate1?.Invoke(this, new GateEvent(gate));
-                    break;
-
-                case "Gate2":
-                    FlightPlanGate2?.Invoke(this, new GateEvent(gate));
-                    break;
-
-                case "Gate3":
-                    FlightPlanGate3?.Invoke(this, new GateEvent(gate));
-                    break;
-
-                default:
-                    break;
-            }
-        }*/
+        #endregion
     }
 }

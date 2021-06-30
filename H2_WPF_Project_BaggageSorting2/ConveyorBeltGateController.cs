@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Diagnostics;
 
@@ -9,28 +6,37 @@ namespace H2_WPF_Project_BaggageSorting2
 {
     public class ConveyorBeltGateController
     {
+        // This class is responsible for our ConveyorBeltGate class, which is basically a few buffers, between Splitters and Gates
+
+        #region Datatypes
+        // Counters for buffers
         static int bufferCounter1 = -1;
         static int bufferCounter2 = -1;
         static int bufferCounter3 = -1;
         static int bufferLostBaggage = -1;
 
+        // Arrays / buffers for baggage
         static Baggage[] conveyorBeltToGate1 = new Baggage[50];
         static Baggage[] conveyorBeltToGate2 = new Baggage[50];
         static Baggage[] conveyorBeltToGate3 = new Baggage[50];
-
         static Baggage[] lostBaggageConveyorBelt = new Baggage[50];
 
-        static int flightNumberGate1 = 0;
-        static int flightNumberGate2 = 0;
-        static int flightNumberGate3 = 0;
-
+        // object locks used by threads
         static object _lockConveyorBeltGate1 = new object();
         static object _lockConveyorBeltGate2 = new object();
         static object _lockConveyorBeltGate3 = new object();
-
         static object _lockLostBaggageBelt = new object();
 
-        #region Used by splitter
+        // flightNumbers which is received from gates
+        static int flightNumberGate1 = 0;
+        static int flightNumberGate2 = 0;
+        static int flightNumberGate3 = 0;
+        #endregion
+
+        #region Methods used by splitters
+        // This method is called by the splitter threads
+        // it checks whether or not, the flight numbers on the baggage, corresponds to
+        // the the flight numbers received from the gates
         public void CheckFlightNumbers(Baggage baggage)
         {
             Random random = new Random();
@@ -54,6 +60,59 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
 
+        #region Adding baggage to gates
+        // These methods increase the bufferCounters and add baggage to the conveyorBeltGate buffers/arrays
+        private void AddBaggageToGate1(Baggage baggage)
+        {
+            Monitor.Enter(_lockConveyorBeltGate1);
+            try
+            {
+                bufferCounter1 = +1;
+                conveyorBeltToGate1[bufferCounter1] = baggage;
+
+                Monitor.PulseAll(_lockConveyorBeltGate1);
+            }
+            finally
+            {
+                Monitor.Exit(_lockConveyorBeltGate1);
+            }
+        }
+
+        private void AddBaggageToGate2(Baggage baggage)
+        {
+            Monitor.Enter(_lockConveyorBeltGate2);
+            try
+            {
+                bufferCounter2 = +1;
+                conveyorBeltToGate2[bufferCounter2] = baggage;
+
+                Monitor.PulseAll(_lockConveyorBeltGate2);
+            }
+            finally
+            {
+                Monitor.Exit(_lockConveyorBeltGate2);
+            }
+        }
+
+        private void AddBaggageToGate3(Baggage baggage)
+        {
+            Monitor.Enter(_lockConveyorBeltGate3);
+            try
+            {
+                bufferCounter3 = +1;
+                conveyorBeltToGate3[bufferCounter3] = baggage;
+
+                Monitor.PulseAll(_lockConveyorBeltGate3);
+            }
+            finally
+            {
+                Monitor.Exit(_lockConveyorBeltGate3);
+            }
+        }
+        #endregion
+
+        // This method is called, when the flight number on a bag, doesn't match up with any gates.
+        // They will be send back into the system
         private void AddBaggageToLostBaggage(Baggage baggage)
         {
             Monitor.Enter(_lockLostBaggageBelt);
@@ -70,70 +129,12 @@ namespace H2_WPF_Project_BaggageSorting2
                 Monitor.Exit(_lockLostBaggageBelt);
             }
         }
-
-        private void AddBaggageToGate1(Baggage baggage)
-        {
-            Monitor.Enter(_lockConveyorBeltGate1);
-            try
-            {
-                Buffer1();
-                conveyorBeltToGate1[bufferCounter1] = baggage;
-
-                Monitor.PulseAll(_lockConveyorBeltGate1);
-            }
-            finally
-            {
-                Monitor.Exit(_lockConveyorBeltGate1);
-            }
-        }
-
-        private void Buffer1()
-        {
-            bufferCounter1 =+ 1;
-        }
-
-        private void AddBaggageToGate2(Baggage baggage)
-        {
-            Monitor.Enter(_lockConveyorBeltGate2);
-            try
-            {
-                Buffer2();
-                conveyorBeltToGate2[bufferCounter2] = baggage;
-
-                Monitor.PulseAll(_lockConveyorBeltGate2);
-            }
-            finally
-            {
-                Monitor.Exit(_lockConveyorBeltGate2);
-            }
-        }
-        private void Buffer2()
-        {
-            bufferCounter2 =+ 1;
-        }
-
-        private void AddBaggageToGate3(Baggage baggage)
-        {
-            Monitor.Enter(_lockConveyorBeltGate3);
-            try
-            {
-                Buffer3();
-                conveyorBeltToGate3[bufferCounter3] = baggage;
-
-                Monitor.PulseAll(_lockConveyorBeltGate3);
-            }
-            finally
-            {
-                Monitor.Exit(_lockConveyorBeltGate3);
-            }
-        }
-        private void Buffer3()
-        {
-            bufferCounter3 =+ 1;
-        }
         #endregion
 
         #region Used by gate
+        // This method is called by the gate threads
+        // it checks which gate has called the method
+        // then returns the baggage from the correct buffer
         public Baggage GetBaggage(Gate gate)
         {
             Baggage baggage = new Baggage(0, 0, 0);
@@ -159,6 +160,8 @@ namespace H2_WPF_Project_BaggageSorting2
             return baggage;
         }
 
+        #region Getting baggage from the conveyor buffers
+        // When these methods are called, they return the baggage from the buffers
         private Baggage Conveyor1(Baggage baggage)
         {
             Monitor.Enter(_lockConveyorBeltGate1);
@@ -167,7 +170,6 @@ namespace H2_WPF_Project_BaggageSorting2
             {
                 baggage = conveyorBeltToGate1[0];
                 MoveBaggageOnConveyorBelt1();
-                bufferCounter1 -= 1;
 
                 Monitor.PulseAll(_lockConveyorBeltGate1);
             }
@@ -187,7 +189,6 @@ namespace H2_WPF_Project_BaggageSorting2
             {
                 baggage = conveyorBeltToGate2[0];
                 MoveBaggageOnConveyorBelt2();
-                bufferCounter2 -= 1;
 
                 Monitor.PulseAll(_lockConveyorBeltGate2);
             }
@@ -206,7 +207,6 @@ namespace H2_WPF_Project_BaggageSorting2
             {
                 baggage = conveyorBeltToGate3[0];
                 MoveBaggageOnConveyorBelt3();
-                bufferCounter3 -= 1;
 
                 Monitor.PulseAll(_lockConveyorBeltGate3);
             }
@@ -217,13 +217,18 @@ namespace H2_WPF_Project_BaggageSorting2
 
             return baggage;
         }
+        #endregion
 
+        #region Moving baggage in conveyorBelts
+        // When these methods are called, they move the baggage on the conveyorBelts/ buffers
+        // and decrease the buffer counters
         void MoveBaggageOnConveyorBelt1()
         {
             for (int i = 0; i < conveyorBeltToGate1.Length - 1; i++)
             {
                 conveyorBeltToGate1[i] = conveyorBeltToGate1[i + 1];
             }
+            bufferCounter1 -= 1;
         }
 
         void MoveBaggageOnConveyorBelt2()
@@ -232,6 +237,7 @@ namespace H2_WPF_Project_BaggageSorting2
             {
                 conveyorBeltToGate2[i] = conveyorBeltToGate2[i + 1];
             }
+            bufferCounter2 -= 1;
         }
 
         void MoveBaggageOnConveyorBelt3()
@@ -240,8 +246,12 @@ namespace H2_WPF_Project_BaggageSorting2
             {
                 conveyorBeltToGate3[i] = conveyorBeltToGate3[i + 1];
             }
+            bufferCounter3 -= 1;
         }
+        #endregion
 
+        // This method is called by the gate threads, to forward their flightnumbers
+        // then the splitters can identify where the baggage should go
         public void AddFlightNumber(Gate gate)
         {
             switch (gate.GateName)

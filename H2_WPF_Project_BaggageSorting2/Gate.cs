@@ -1,21 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace H2_WPF_Project_BaggageSorting2
 {
     public class Gate
     {
+        // This class is responsible for gate objects
+
+        #region Attributes
         private string _gateName;
         private bool _open;
         private int _flightNumber;
         private string _destination;
         private DateTime _departure;
         private Baggage[] _baggageCart;
+        #endregion
 
+        #region Encupsulations
         public string GateName
         {
             get
@@ -82,6 +83,7 @@ namespace H2_WPF_Project_BaggageSorting2
                 this._baggageCart = value;
             }
         }
+        #endregion
 
         public Gate(string gateName, bool open, int flightNumber, string destination, Baggage[] baggageCart)
         {
@@ -92,10 +94,9 @@ namespace H2_WPF_Project_BaggageSorting2
             BaggageCart = baggageCart;
         }
 
+        // When this method is called by a gate, it determines whether the gate should open or close
         public bool OpenOrClosed(bool open, int remainingFlightPlans)
         {
-            // Maybe control it with time? 
-
             Random random = new Random();
 
             if (remainingFlightPlans == 0)
@@ -118,7 +119,6 @@ namespace H2_WPF_Project_BaggageSorting2
                         break;
                 }
             }
-
             Debug.WriteLine($"{GateName} Open = {open}");
 
             return open;
