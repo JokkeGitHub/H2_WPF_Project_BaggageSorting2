@@ -71,6 +71,9 @@ namespace H2_WPF_Project_BaggageSorting2
             splitterController.BaggageArrivedInSplitter1 += OnBaggageArrivedInSplitter1;
             splitterController.BaggageArrivedInSplitter2 += OnBaggageArrivedInSplitter2;
 
+            splitterController.BaggageLeavesSplitter1 += OnBaggageLeavesSplitter1;
+            splitterController.BaggageLeavesSplitter2 += OnBaggageLeavesSplitter2;
+
             gateController.OpenOrClosedGate1 += OnOpenOrClosedGate1;
             gateController.OpenOrClosedGate2 += OnOpenOrClosedGate2;
             gateController.OpenOrClosedGate3 += OnOpenOrClosedGate3;
@@ -229,15 +232,17 @@ namespace H2_WPF_Project_BaggageSorting2
         #endregion
 
         #region CONVEYOR BELT EVENTS ??????? NOT WORKING FIX THIS MOFUGGAH
-
+        /*
         public void ConveyorGUITest()
         {
             ConveyorBeltController conveyorBeltController = new ConveyorBeltController();
 
             Baggage[] conveyorBelt = conveyorBeltController.GetConveyorBelt();
 
-            ConveyorBeltListBox.ItemsSource = conveyorBelt;
+            //ConveyorBeltListBox.ItemsSource = conveyorBelt;
         }
+
+        public List<Baggage> conveyorList = new List<Baggage>();*/
 
         /*
         private void OnBaggageInConveyorBelt(object sender, EventArgs e)
@@ -246,10 +251,18 @@ namespace H2_WPF_Project_BaggageSorting2
             {
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
                 {
-                    ConveyorBeltLabel0.Content = ((BaggageEvent)e).Baggage.BaggageId;
+                    //DataGridView.Items.Clear();
+
+                    ((GridView)DataGridView.View).Columns[0].Header = "Baggage ID";
+
+                    DataGridView.Items.Add(new { Column = ((BaggageEvent)e).Baggage.BaggageId.ToString() });
+
+                    /*conveyorList.Add(((BaggageEvent)e).Baggage);
+                    ConveyorBeltDataGrid.ItemsSource = conveyorList;
+                    //ConveyorBeltLabel0.Content = ((BaggageEvent)e).Baggage.BaggageId;
                 }));
             }
-        }
+        }*/
 
         //Maybe Baggage event instead
         /*
@@ -290,6 +303,26 @@ namespace H2_WPF_Project_BaggageSorting2
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
                 {
                     Splitter2.Content = ((BaggageEvent)e).Baggage.BaggageId;
+                }));
+            }
+        }
+        private void OnBaggageLeavesSplitter1(object sender, EventArgs e)
+        {
+            if (e is BaggageEvent)
+            {
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                {
+                    Splitter1.Content = "";
+                }));
+            }
+        }
+        private void OnBaggageLeavesSplitter2(object sender, EventArgs e)
+        {
+            if (e is BaggageEvent)
+            {
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                {
+                    Splitter2.Content = "";
                 }));
             }
         }

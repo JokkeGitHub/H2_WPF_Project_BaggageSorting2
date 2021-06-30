@@ -4,8 +4,9 @@ namespace H2_WPF_Project_BaggageSorting2
 {
     public class Baggage
     {
-        // This class is responsible for baggage
+        // This class is responsible for baggage objects
 
+        #region Attributes
         private int _baggageId;
         private int _passengerId;
         private int _flightNumber;
@@ -13,7 +14,9 @@ namespace H2_WPF_Project_BaggageSorting2
         private DateTime _arrivedAtSplitter;
         private DateTime _leftSplitter;
         private DateTime _arrivedAtGate;
+        #endregion
 
+        #region Encapsulations
         public int BaggageId
         {
             get
@@ -97,6 +100,7 @@ namespace H2_WPF_Project_BaggageSorting2
                 this._arrivedAtGate = value;
             }
         }
+        #endregion
 
         public Baggage(int baggageId, int passengerId, int flightNumber)
         {

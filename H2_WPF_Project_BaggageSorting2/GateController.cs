@@ -19,6 +19,8 @@ namespace H2_WPF_Project_BaggageSorting2
         int remainingFlightPlans = flightPlan.Length;
         object _lockFlightPlan = new object();
 
+        int bufferBaggageCart = -1;
+
         public EventHandler OpenOrClosedGate1;
         public EventHandler OpenOrClosedGate2;
         public EventHandler OpenOrClosedGate3;
@@ -91,11 +93,20 @@ namespace H2_WPF_Project_BaggageSorting2
                     {
                         baggage.ArrivedAtGate = DateTime.Now;
 
+                        bufferBaggageCart = +1;
+                        gate.BaggageCart[bufferBaggageCart] = baggage;
+
                         BaggageArrivedInGate(gate, baggage);
                         Debug.WriteLine($"Bag {baggage.BaggageId} arrived in {gate.GateName} at {baggage.ArrivedAtGate} for flight {baggage.FlightNumber}");
                     }
                 }
 
+                for (int i = 0; i < gate.BaggageCart.Length -1; i++)
+                {
+                }
+
+                    gate.BaggageCart = null;
+                bufferBaggageCart = -1;
                 Debug.WriteLine($"Flight {gate.FlightNumber}, destination {gate.Destination} has left {gate.GateName} at {gate.Departure}");
             }
         }

@@ -48,15 +48,15 @@ namespace H2_WPF_Project_BaggageSorting2
 
             while (true)
             {
+                Thread.Sleep(random.Next(100, 500));
+                reception.Open = reception.OpenOrClosed(reception.Open, remainingReservations);
+                OpenClosedDetermineListener(reception);
+
                 if (reception.Open == true)
                 {
                     Thread.Sleep(random.Next(100, 500));
                     GetReservationInfo(reception);
                 }
-
-                Thread.Sleep(random.Next(100, 500));
-                reception.Open = reception.OpenOrClosed(reception.Open, remainingReservations);
-                OpenClosedDetermineListener(reception);
             }
         }
 
@@ -118,6 +118,8 @@ namespace H2_WPF_Project_BaggageSorting2
             {
                 Monitor.Exit(_lockConveyorBelt);
             }
+
+            //
         }
 
 
