@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Diagnostics;
 
@@ -32,6 +29,7 @@ namespace H2_WPF_Project_BaggageSorting2
         public EventHandler OpenOrClosedCounter4;
         #endregion
 
+        // This is where we create our threads
         public ReceptionController()
         {
             for (int i = 1; i <= 4; i++)
@@ -41,6 +39,8 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
 
+        // This method is called by threads when they start
+        // It creates receptions, and starts the Check-In process
         private void CheckIn()
         {
             ReceptionFactory receptionFactory = new ReceptionFactory();
@@ -48,18 +48,26 @@ namespace H2_WPF_Project_BaggageSorting2
 
             while (true)
             {
-                Thread.Sleep(random.Next(100, 500));
-                reception.Open = reception.OpenOrClosed(reception.Open, remainingReservations);
-                OpenClosedDetermineListener(reception);
-
-                if (reception.Open == true)
-                {
-                    Thread.Sleep(random.Next(100, 500));
-                    GetReservationInfo(reception);
-                }
+                OpenOrClose(reception);
             }
         }
 
+        // This method controls when the receptions opens or closes
+        private void OpenOrClose(Reception reception)
+        {
+            Thread.Sleep(random.Next(100, 500));
+            reception.Open = reception.OpenOrClosed(reception.Open, remainingReservations);
+            OpenClosedDetermineListener(reception);
+
+            if (reception.Open == true)
+            {
+                Thread.Sleep(random.Next(100, 500));
+                GetReservationInfo(reception);
+            }
+        }
+
+        // This method is responsible for retrieving all the necessary info from the reservations
+        // then the data can be passed on into the system
         private void GetReservationInfo(Reception reception)
         {
             Monitor.Enter(_lockReservation);
@@ -87,6 +95,8 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
 
+        // This method is using the data which is passed on in the parameters
+        // to call the baggage factory and the create the baggage in the system
         private void CreateBaggage(Reception reception, int passengerId, int flightNumber)
         {
             BaggageFactory baggageFactory = new BaggageFactory();
@@ -99,6 +109,7 @@ namespace H2_WPF_Project_BaggageSorting2
             BaggageLeavingReception(baggage, reception);
         }
 
+        // When the baggage has been created in the system, it will be passed on to the conveyor belt
         private void BaggageLeavingReception(Baggage baggage, Reception reception)
         {
             ConveyorBeltController conveyorBeltController = new ConveyorBeltController();
@@ -118,14 +129,10 @@ namespace H2_WPF_Project_BaggageSorting2
             {
                 Monitor.Exit(_lockConveyorBelt);
             }
-
-            //
         }
 
-
-        // add bag event
-
-
+        // This method moves on to the next reservation in the array
+        // then decreases the reservations counter
         private void NextReservation()
         {
             Monitor.Enter(_lockReservation);
@@ -136,7 +143,6 @@ namespace H2_WPF_Project_BaggageSorting2
                 {
                     reservations[i] = reservations[i + 1];
                 }
-
                 remainingReservations -= 1;
             }
             finally
@@ -145,8 +151,9 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
 
-
-        // New class for these?
+        #region Listeners
+        // When this method is called, it checks which reception/counter has called it
+        // Then it invokes the corresponding listener
         private void OpenClosedDetermineListener(Reception reception)
         {
             switch (reception.CounterName)
@@ -172,6 +179,8 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
 
+        // When this method is called, it checks which reception/counter has called it
+        // Then it invokes the corresponding listener
         private void BaggageCreatedDetermineListener(Reception reception, Baggage baggage)
         {
             switch (reception.CounterName)
@@ -196,5 +205,6 @@ namespace H2_WPF_Project_BaggageSorting2
                     break;
             }
         }
+        #endregion
     }
 }

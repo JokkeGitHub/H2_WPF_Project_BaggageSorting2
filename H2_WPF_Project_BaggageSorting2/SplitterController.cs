@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Diagnostics;
 
@@ -9,15 +6,20 @@ namespace H2_WPF_Project_BaggageSorting2
 {
     class SplitterController
     {
+        // This class is responsible for passing on the baggage to the correct recipients/gates
+
         ConveyorBeltController conveyorBeltController = new ConveyorBeltController();
         static object _lockGetBaggage = new object();
 
+        #region Event Listeners
         public EventHandler BaggageArrivedInSplitter1;
         public EventHandler BaggageArrivedInSplitter2;
 
         public EventHandler BaggageLeavesSplitter1;
         public EventHandler BaggageLeavesSplitter2;
+        #endregion
 
+        // Here we create our splitter threads
         public SplitterController()
         {
             for (int i = 1; i <= 2; i++)
@@ -28,6 +30,8 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
 
+        // This method is called when the threads start
+        // it retrieves baggage from the conveyor belt
         private void SplitterSorting(int splitterNumber)
         {
             Random random = new Random();
@@ -49,32 +53,40 @@ namespace H2_WPF_Project_BaggageSorting2
                     Monitor.Exit(_lockGetBaggage);
                 }
 
-                if (baggage != null)
-                {
-                    baggage.ArrivedAtSplitter = DateTime.Now;
-                    Debug.WriteLine($"Bag {baggage.BaggageId} arrived at splitter{splitterNumber}, at {baggage.ArrivedAtSplitter}");
+                BaggageArrivesInSPlitter(baggage, splitterNumber);
+            }
+        }
 
-                    BaggageArrivedInSplitterDetermineListener(splitterNumber, baggage);
-                }
+        // This method checks whether or not, baggage was received
+        // then if baggage was received, it is passed on
+        private void BaggageArrivesInSPlitter(Baggage baggage, int splitterNumber)
+        {
+            if (baggage != null)
+            {
+                baggage.ArrivedAtSplitter = DateTime.Now;
+                Debug.WriteLine($"Bag {baggage.BaggageId} arrived at splitter{splitterNumber}, at {baggage.ArrivedAtSplitter}");
 
+                BaggageArrivedInSplitterDetermineListener(splitterNumber, baggage);
                 BaggageLeavesSplitter(baggage, splitterNumber);
             }
         }
 
+        // Here the baggage leaves the splitter
         private void BaggageLeavesSplitter(Baggage baggage, int splitterNumber)
         {
             ConveyorBeltGateController conveyorBeltGateController = new ConveyorBeltGateController();
 
-            if (baggage != null)
-            {
-                baggage.LeftSplitter = DateTime.Now;
-                Debug.WriteLine($"Bag {baggage.BaggageId} left splitter at {baggage.LeftSplitter}");
+            baggage.LeftSplitter = DateTime.Now;
+            Debug.WriteLine($"Bag {baggage.BaggageId} left splitter at {baggage.LeftSplitter}");
 
-                conveyorBeltGateController.CheckFlightNumbers(baggage);
-                BaggageLeavesSplitterDetermineListener(splitterNumber, baggage);
-            }
+            conveyorBeltGateController.CheckFlightNumbers(baggage);
+            BaggageLeavesSplitterDetermineListener(splitterNumber, baggage);
+
         }
 
+        #region Listeners
+        // When this method is called, it checks which splitter has called it
+        // Then it invokes the corresponding listener
         private void BaggageArrivedInSplitterDetermineListener(int splitterNumber, Baggage baggage)
         {
             switch (splitterNumber)
@@ -91,6 +103,9 @@ namespace H2_WPF_Project_BaggageSorting2
                     break;
             }
         }
+
+        // When this method is called, it checks which splitter has called it
+        // Then it invokes the corresponding listener
         private void BaggageLeavesSplitterDetermineListener(int splitterNumber, Baggage baggage)
         {
             switch (splitterNumber)
@@ -107,5 +122,6 @@ namespace H2_WPF_Project_BaggageSorting2
                     break;
             }
         }
+        #endregion
     }
 }

@@ -4,13 +4,16 @@ namespace H2_WPF_Project_BaggageSorting2
 {
     public class Reservation
     {
-        // This class is responsible for reservations
+        // This class is responsible for reservation objects
 
+        #region Attributes
         private string _passengerName;
         private int _passengerId;
         private int _flightNumber;
         private DateTime _departure;
+        #endregion
 
+        #region Encapsulations
         public string PassengerName
         {
             get
@@ -57,6 +60,7 @@ namespace H2_WPF_Project_BaggageSorting2
                 this._departure = value;
             }
         }
+        #endregion
 
         public Reservation(string passengerName, int passengerId, int flightNumber, DateTime departure)
         {

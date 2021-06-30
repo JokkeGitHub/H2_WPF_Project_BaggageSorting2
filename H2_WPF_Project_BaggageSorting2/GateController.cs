@@ -30,7 +30,7 @@ namespace H2_WPF_Project_BaggageSorting2
         public EventHandler BaggageArrivedGate3;
         #endregion
 
-        // This is where we start our threads
+        // This is where we create our threads
         public GateController()
         {
             for (int i = 1; i <= 3; i++)
@@ -41,6 +41,7 @@ namespace H2_WPF_Project_BaggageSorting2
         }
 
         // This method is called by threads when they start
+        // It creates gates, and starts their process
         private void StartGate()
         {
             GateFactory gateFactory = new GateFactory();
@@ -52,6 +53,7 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
 
+        // This method controls when the gate opens or closes
         private void OpenOrClose(Gate gate)
         {
             gate.Open = gate.OpenOrClosed(gate.Open, remainingFlightPlans);

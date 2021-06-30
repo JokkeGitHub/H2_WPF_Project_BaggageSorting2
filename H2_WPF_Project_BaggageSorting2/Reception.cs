@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace H2_WPF_Project_BaggageSorting2
 {
     public class Reception
     {
-        // This class is responsible for the reception/check-in
+        // This class is responsible for the reception objects
 
+        #region Attributes
         private string _counterName;
         private bool _open;
+        #endregion
 
+        #region Encapsulations
         public string CounterName
         {
             get
@@ -37,6 +36,7 @@ namespace H2_WPF_Project_BaggageSorting2
                 this._open = value;
             }
         }
+        #endregion
 
         public Reception(string counterName, bool open)
         {
@@ -44,6 +44,7 @@ namespace H2_WPF_Project_BaggageSorting2
             Open = open;
         }
 
+        // When this method is called by a reception, it determines whether the reception should open or close
         public bool OpenOrClosed(bool open, int remainingReservations)
         {
             Random random = new Random();
@@ -70,7 +71,6 @@ namespace H2_WPF_Project_BaggageSorting2
 
                 Debug.WriteLine($"{CounterName} Open = {open}");
             }
-
             return open;
         }
     }
