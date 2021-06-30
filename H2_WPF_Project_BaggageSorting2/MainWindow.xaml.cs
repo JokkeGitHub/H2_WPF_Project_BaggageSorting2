@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace H2_WPF_Project_BaggageSorting2
@@ -22,39 +10,26 @@ namespace H2_WPF_Project_BaggageSorting2
     /// </summary>
     public partial class MainWindow : Window
     {
-        //Label[] label = new Label[12];
-
         public MainWindow()
         {
             InitializeComponent();
-            //InitializeLabelList();
         }
 
-        /*
-        void InitializeLabelList()
-        {
-            label[0] = ConveyorBeltLabel0;
-            label[1] = ConveyorBeltLabel1;
-            label[2] = ConveyorBeltLabel2;
-            label[3] = ConveyorBeltLabel3;
-            label[4] = ConveyorBeltLabel4;
-            label[5] = ConveyorBeltLabel5;
-            label[6] = ConveyorBeltLabel6;
-            label[7] = ConveyorBeltLabel7;
-            label[8] = ConveyorBeltLabel8;
-            label[9] = ConveyorBeltLabel9;
-            label[10] = ConveyorBeltLabel10;
-            label[11] = ConveyorBeltLabel11;
-        }*/
-
+        // When the start button is clicked, we call the initialization methods
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
             StartButton.Visibility = Visibility.Hidden;
 
+            ReceptionInitialization();
+            SplitterInitialization();
+            GateInitialization();
+        }
+
+        #region Initialization Methods
+        // This thread initializes the receptionController and events from the reception
+        private void ReceptionInitialization()
+        {
             ReceptionController receptionController = new ReceptionController();
-            ConveyorBeltController conveyorBeltController = new ConveyorBeltController();
-            SplitterController splitterController = new SplitterController();
-            GateController gateController = new GateController();
 
             receptionController.BaggageCreated1 += OnBaggageCreated1;
             receptionController.BaggageCreated2 += OnBaggageCreated2;
@@ -65,14 +40,24 @@ namespace H2_WPF_Project_BaggageSorting2
             receptionController.OpenOrClosedCounter2 += OnOpenOrClosedCounter2;
             receptionController.OpenOrClosedCounter3 += OnOpenOrClosedCounter3;
             receptionController.OpenOrClosedCounter4 += OnOpenOrClosedCounter4;
+        }
 
-            //conveyorBeltController.BaggageInConveyorBelt += OnBaggageInConveyorBelt;
+        // This thread initializes the splitterController and events from the splitter
+        private void SplitterInitialization()
+        {
+            SplitterController splitterController = new SplitterController();
 
             splitterController.BaggageArrivedInSplitter1 += OnBaggageArrivedInSplitter1;
             splitterController.BaggageArrivedInSplitter2 += OnBaggageArrivedInSplitter2;
 
             splitterController.BaggageLeavesSplitter1 += OnBaggageLeavesSplitter1;
             splitterController.BaggageLeavesSplitter2 += OnBaggageLeavesSplitter2;
+        }
+
+        // This thread initializes the gateController and events from the gate
+        private void GateInitialization()
+        {
+            GateController gateController = new GateController();
 
             gateController.OpenOrClosedGate1 += OnOpenOrClosedGate1;
             gateController.OpenOrClosedGate2 += OnOpenOrClosedGate2;
@@ -86,8 +71,10 @@ namespace H2_WPF_Project_BaggageSorting2
             gateController.FlightPlanGate2 += OnFlightPlanGate2;
             gateController.FlightPlanGate3 += OnFlightPlanGate3;*/
         }
+        #endregion
 
         #region OnBaggageCreated Events
+        // The events in this region, displays the corresponding receptions last created bag, and displays it on a label
         private void OnBaggageCreated1(object sender, EventArgs e)
         {
             if (e is BaggageEvent)
@@ -134,6 +121,7 @@ namespace H2_WPF_Project_BaggageSorting2
         #endregion
 
         #region OnOpenOrClosedCounter Events
+        // The events in this region, displays whether or not the corresponding reception is open(green) or closed(red), and displays it on a label
         private void OnOpenOrClosedCounter1(object sender, EventArgs e)
         {
             if (e is ReceptionEvent)
@@ -231,61 +219,8 @@ namespace H2_WPF_Project_BaggageSorting2
         }
         #endregion
 
-        #region CONVEYOR BELT EVENTS ??????? NOT WORKING FIX THIS MOFUGGAH
-        /*
-        public void ConveyorGUITest()
-        {
-            ConveyorBeltController conveyorBeltController = new ConveyorBeltController();
-
-            Baggage[] conveyorBelt = conveyorBeltController.GetConveyorBelt();
-
-            //ConveyorBeltListBox.ItemsSource = conveyorBelt;
-        }
-
-        public List<Baggage> conveyorList = new List<Baggage>();*/
-
-        /*
-        private void OnBaggageInConveyorBelt(object sender, EventArgs e)
-        {
-            if (e is BaggageEvent)
-            {
-                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
-                {
-                    //DataGridView.Items.Clear();
-
-                    ((GridView)DataGridView.View).Columns[0].Header = "Baggage ID";
-
-                    DataGridView.Items.Add(new { Column = ((BaggageEvent)e).Baggage.BaggageId.ToString() });
-
-                    /*conveyorList.Add(((BaggageEvent)e).Baggage);
-                    ConveyorBeltDataGrid.ItemsSource = conveyorList;
-                    //ConveyorBeltLabel0.Content = ((BaggageEvent)e).Baggage.BaggageId;
-                }));
-            }
-        }*/
-
-        //Maybe Baggage event instead
-        /*
-        public void ConveyorTest()
-        {
-            ConveyorBeltController conveyorBeltController = new ConveyorBeltController();
-            Baggage[] conveyorBelt = conveyorBeltController.GetConveyorBelt();            
-
-            for (int i = 0; i < conveyorBelt.Length -1; i++)
-            {
-                if (conveyorBelt[i] == null)
-                {
-                    label[i].Content = "";
-                }
-                else
-                {
-                    label[i].Content = conveyorBelt[i].BaggageId;
-                }
-            }
-        }*/
-        #endregion
-
         #region OnBaggageArrivedInSplitter Events
+        // The events in this region displays the baggage id, in the corresponding splitter's label, when the baggage arrives in the splitter
         private void OnBaggageArrivedInSplitter1(object sender, EventArgs e)
         {
             if (e is BaggageEvent)
@@ -306,6 +241,10 @@ namespace H2_WPF_Project_BaggageSorting2
                 }));
             }
         }
+        #endregion
+
+        #region OnBaggageLeavesSplitter
+        // The events in this region, resets the label of the corresponding splitter, when baggage leaves the splitter
         private void OnBaggageLeavesSplitter1(object sender, EventArgs e)
         {
             if (e is BaggageEvent)
@@ -329,6 +268,7 @@ namespace H2_WPF_Project_BaggageSorting2
         #endregion
 
         #region OnOpenOrClosedGate Events
+        // The events in this region, displays whether or not the corresponding gate is open(green) or closed(red), and displays it on a label
         private void OnOpenOrClosedGate1(object sender, EventArgs e)
         {
             if (e is GateEvent)
@@ -420,7 +360,10 @@ namespace H2_WPF_Project_BaggageSorting2
         }
         #endregion
 
+        // Maybe new events for flight numbers etc
+
         #region OnBaggageArrivedGate Events
+        // The events in this region displays the baggage id, in the corresponding gate's label, when the baggage arrives in the gate
         private void OnBaggageArrivedGate1(object sender, EventArgs e)
         {
             if (e is BaggageEvent)
@@ -452,6 +395,5 @@ namespace H2_WPF_Project_BaggageSorting2
             }
         }
         #endregion
-        // Maybe new events for flight numbers etc
     }
 }
