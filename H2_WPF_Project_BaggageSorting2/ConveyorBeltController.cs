@@ -12,15 +12,6 @@ namespace H2_WPF_Project_BaggageSorting2
         static Baggage[] conveyorBelt = new Baggage[50];
         static object _lockConveyorBelt = new object();
 
-        // This is a baggage event listener
-        public EventHandler BaggageInConveyorBelt;
-
-        /*
-        public Baggage[] GetConveyorBelt()
-        {
-            return (Baggage[])conveyorBelt.Clone();
-        }*/
-
         #region Methods used by Receptions
         // This method is called by threads in the reception controller class
         // it adds baggage to the conveyorBelt array, and increases the bufferCounter
@@ -39,14 +30,6 @@ namespace H2_WPF_Project_BaggageSorting2
             {
                 Monitor.Exit(_lockConveyorBelt);
             }
-
-            DetermineListenerTest(baggage);
-        }
-
-        //This method calls our event listener
-        private void DetermineListenerTest(Baggage baggage)
-        {
-            BaggageInConveyorBelt?.Invoke(this, new BaggageEvent(baggage));
         }
         #endregion
 

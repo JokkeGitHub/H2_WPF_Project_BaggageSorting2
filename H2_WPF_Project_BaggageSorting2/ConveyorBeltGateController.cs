@@ -10,22 +10,19 @@ namespace H2_WPF_Project_BaggageSorting2
 
         #region Datatypes
         // Counters for buffers
-        static int bufferCounter1 = -1;
-        static int bufferCounter2 = -1;
-        static int bufferCounter3 = -1;
-        static int bufferLostBaggage = -1;
+        public int bufferCounter1 = -1;
+        public int bufferCounter2 = -1;
+        public int bufferCounter3 = -1;
 
         // Arrays / buffers for baggage
         static Baggage[] conveyorBeltToGate1 = new Baggage[50];
         static Baggage[] conveyorBeltToGate2 = new Baggage[50];
         static Baggage[] conveyorBeltToGate3 = new Baggage[50];
-        static Baggage[] lostBaggageConveyorBelt = new Baggage[50];
 
         // object locks used by threads
         static object _lockConveyorBeltGate1 = new object();
         static object _lockConveyorBeltGate2 = new object();
         static object _lockConveyorBeltGate3 = new object();
-        static object _lockLostBaggageBelt = new object();
 
         // flightNumbers which is received from gates
         static int flightNumberGate1 = 0;
@@ -115,19 +112,10 @@ namespace H2_WPF_Project_BaggageSorting2
         // They will be send back into the system
         private void AddBaggageToLostBaggage(Baggage baggage)
         {
-            Monitor.Enter(_lockLostBaggageBelt);
-            try
-            {
-                bufferLostBaggage = +1;
-                lostBaggageConveyorBelt[bufferLostBaggage] = baggage;
-                Debug.WriteLine($"Bag {baggage.BaggageId} added to lost baggage");
+            ConveyorBeltLostBaggageController conveyorBeltLostBaggageController = new ConveyorBeltLostBaggageController();
 
-                Monitor.PulseAll(_lockLostBaggageBelt);
-            }
-            finally
-            {
-                Monitor.Exit(_lockLostBaggageBelt);
-            }
+            Debug.WriteLine($"Bag {baggage.BaggageId} added to lost baggage");
+            conveyorBeltLostBaggageController.AddBagToLostBaggage(baggage);
         }
         #endregion
 
