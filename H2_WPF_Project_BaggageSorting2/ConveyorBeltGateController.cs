@@ -10,9 +10,9 @@ namespace H2_WPF_Project_BaggageSorting2
 
         #region Datatypes
         // Counters for buffers
-        public int bufferCounter1 = -1;
-        public int bufferCounter2 = -1;
-        public int bufferCounter3 = -1;
+        public int bufferCounter1 = 0;
+        public int bufferCounter2 = 0;
+        public int bufferCounter3 = 0;
 
         // Arrays / buffers for baggage
         static Baggage[] conveyorBeltToGate1 = new Baggage[50];
@@ -64,8 +64,8 @@ namespace H2_WPF_Project_BaggageSorting2
             Monitor.Enter(_lockConveyorBeltGate1);
             try
             {
-                bufferCounter1 = +1;
                 conveyorBeltToGate1[bufferCounter1] = baggage;
+                bufferCounter1 = +1;
 
                 Monitor.PulseAll(_lockConveyorBeltGate1);
             }
@@ -80,8 +80,8 @@ namespace H2_WPF_Project_BaggageSorting2
             Monitor.Enter(_lockConveyorBeltGate2);
             try
             {
-                bufferCounter2 = +1;
                 conveyorBeltToGate2[bufferCounter2] = baggage;
+                bufferCounter2 = +1;
 
                 Monitor.PulseAll(_lockConveyorBeltGate2);
             }
@@ -96,8 +96,8 @@ namespace H2_WPF_Project_BaggageSorting2
             Monitor.Enter(_lockConveyorBeltGate3);
             try
             {
-                bufferCounter3 = +1;
                 conveyorBeltToGate3[bufferCounter3] = baggage;
+                bufferCounter3 = +1;
 
                 Monitor.PulseAll(_lockConveyorBeltGate3);
             }
@@ -123,10 +123,8 @@ namespace H2_WPF_Project_BaggageSorting2
         // This method is called by the gate threads
         // it checks which gate has called the method
         // then returns the baggage from the correct buffer
-        public Baggage GetBaggage(Gate gate)
+        public Baggage GetBaggage(Gate gate, Baggage baggage)
         {
-            Baggage baggage = new Baggage(0, 0, 0);
-
             switch (gate.GateName)
             {
                 case "Gate1":

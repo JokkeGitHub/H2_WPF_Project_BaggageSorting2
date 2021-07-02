@@ -17,9 +17,7 @@ namespace H2_WPF_Project_BaggageSorting2
         int remainingFlightPlans = flightPlan.Length;
         object _lockFlightPlan = new object();
 
-        int bufferBaggageCart1 = -1;
-        int bufferBaggageCart2 = -1;
-        int bufferBaggageCart3 = -1;
+        int bufferBaggageCart = -1;
 
         #region Event listeners
         // our event listeners
@@ -101,34 +99,33 @@ namespace H2_WPF_Project_BaggageSorting2
             if (gate.Open == true)
             {
                 Baggage baggage = new Baggage(0, 0, 0);
-                int buffer = -1;
 
-                while (DateTime.Now < gate.Departure)
+                do
                 {
-                    Thread.Sleep(random.Next(200, 600));
-                    baggage = conveyorBeltGateController.GetBaggage(gate);
+                    Thread.Sleep(random.Next(300, 500));
+                    baggage = conveyorBeltGateController.GetBaggage(gate, baggage);
 
                     if (baggage != null)
                     {
                         baggage.ArrivedAtGate = DateTime.Now;
-                        buffer =+ 1;
-                        gate.BaggageCart[buffer] = baggage;
+
+                        bufferBaggageCart = +1;
+                        gate.BaggageCart[bufferBaggageCart] = baggage;
 
                         BaggageArrivedInGate(gate, baggage);
                         Debug.WriteLine($"Bag {baggage.BaggageId} arrived in {gate.GateName} at {baggage.ArrivedAtGate} for flight {baggage.FlightNumber}");
                     }
-                }
+                } while (DateTime.Now < gate.Departure);
 
                 PlaneLeaves(gate);
             }
         }
 
-        // This method checks which gate needs a buffer
-
         // This method is resetting the buffer counter and the baggageCart arrays
         private void PlaneLeaves(Gate gate)
         {
             gate.BaggageCart = null;
+            bufferBaggageCart = -1;
             Debug.WriteLine($"Flight {gate.FlightNumber}, destination {gate.Destination} has left {gate.GateName} at {gate.Departure}");
         }
 

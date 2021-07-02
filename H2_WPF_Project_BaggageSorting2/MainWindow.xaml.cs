@@ -10,7 +10,9 @@ namespace H2_WPF_Project_BaggageSorting2
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        // I WPF delen(events) var t =¨this.FindName("GateLabel" + e.Teminal.Id +1) , if (t is Label){ ((Label) t).Content = ... }
+
+    public MainWindow()
         {
             InitializeComponent();
         }

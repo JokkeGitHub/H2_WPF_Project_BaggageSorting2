@@ -9,7 +9,7 @@ namespace H2_WPF_Project_BaggageSorting2
         // This class is responsible for our ConveyorBelt class, which is basically a buffer, between Reception and Splitter
 
         static int bufferCounter = -1;
-        static Baggage[] conveyorBelt = new Baggage[50];
+        static Baggage[] conveyorBelt = new Baggage[50]; // !! Lav conveyor object , navn, array, counter, 
         static object _lockConveyorBelt = new object();
 
         #region Methods used by Receptions
